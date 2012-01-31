@@ -10,9 +10,10 @@ import org.digitalerasselbande.rogue.map.Map;
 
 public class Game {
 
-	public static final int WORLD_WIDTH = 16;
-	public static final int WORLD_HEIGHT = 16;
-	private static final int NUM_MONSTERS = 2;
+	public static final int WORLD_WIDTH = 128;
+	public static final int WORLD_HEIGHT = 128;
+	private static final int WINDOW_SIZE = 8;
+	private static final int NUM_MONSTERS = 12;
 	
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
@@ -94,11 +95,25 @@ public class Game {
 	}
 	
 	private static void drawWorld() {
-		map.draw();
+		int x1, x2, y1, y2;
+		int window_size = WINDOW_SIZE;
+		x1 = p.getPos_x() - window_size;
+		x1 = x1 > 0 ? x1 : 0;
+		x2 = p.getPos_x() + window_size;
+		x2 = x2 < WORLD_WIDTH ? x2 : WORLD_WIDTH;
+		y1 = p.getPos_y() - window_size;
+		y1 = y1 > 0 ? y1 : 0;
+		y2 = p.getPos_y() + window_size;
+		y2 = y2 < WORLD_HEIGHT ? y2 : WORLD_HEIGHT;
+		
+
+		map.draw(x1,x2,y1,y2);
+		
+		
 	}
 	
 	private static void drawDeathMessage() {
-		System.out.println("You're dead");
+		System.out.println("You survived " + turns + " turns, but now you're dead!");
 	}
 
 	private static void drawVictoryMessage() {

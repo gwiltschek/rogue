@@ -41,7 +41,7 @@ public class Map {
 		}
 	}
 	
-	public void draw() {
+	public void draw(int x1, int x2, int y1, int y2) {
 		int x, y;
 		String[][] output = new String[w][h];
 
@@ -57,15 +57,18 @@ public class Map {
 			output[e.getPos_x()][e.getPos_y()] = "\033[31m" + e.getSymbol() + "\033[0m";
 		}
 		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
+
+		// player pos
+		System.out.println(p.getPos_x() + " " + p.getPos_y());
 		
-		// draw output map
-		for (y = 0; y < w; y++) {
-			for (x = 0; x < h; x++) {
+		// draw output map window
+		for (y = y1; y < y2; y++) {
+			for (x = x1; x < x2; x++) {
 				System.out.print(output[x][y]);
 			}			
 			System.out.println();
 		}
-		for (int i = 0; i < Game.WORLD_WIDTH; i++) {
+		for (int i = 0; i < 15; i++) {
 			System.out.print("-");
 		}
 		
@@ -112,7 +115,6 @@ public class Map {
 	}
 	
 	public boolean collidesWall(int x, int y) {
-		System.out.println(x + " " + y);
 		if (map[x][y] != " ") {
 			return true;
 		}

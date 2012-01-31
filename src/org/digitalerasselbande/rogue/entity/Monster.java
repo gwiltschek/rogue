@@ -11,7 +11,7 @@ public class Monster extends Entity {
 	
 	public Monster(Map map) {
 		setSymbol("!");
-		setHealth(10 + new Random().nextInt(40));
+		setHealth(50 + new Random().nextInt(50));
 		this.map = map;
 	}	
 	
