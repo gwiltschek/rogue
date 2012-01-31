@@ -48,7 +48,7 @@ public class Game {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
-			return reader.read();
+			return reader.readLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

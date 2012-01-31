@@ -7,11 +7,11 @@ import org.digitalerasselbande.rogue.map.Map;
 
 public class Monster extends Entity {
 
-	Map map;
+	private Map map;
 	
 	public Monster(Map map) {
 		setSymbol("!");
-		setHealth(70 + new Random().nextInt(20));
+		setHealth(70 + new Random().nextInt(40));
 		this.map = map;
 	}	
 	
