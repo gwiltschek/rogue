@@ -10,6 +10,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -25,116 +26,73 @@ public class Game extends BasicGame {
 	public static final int NUM_SIGNS = 4;
 	public static final String WALL = "I";
 	public static final String EMPTY_SPACE = " ";
-	
+
 	private static final int WINDOW_SIZE = 24;
 	private static final int NUM_MONSTERS = 2;
-	
+
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
-	
+
 	public String outputMap;
-	
-	public static void main(String [ ] args) {
-        try {
-            AppGameContainer app = new AppGameContainer(new Game());
-            app.start();
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-       }
-        
-        @Override
-        public void init(GameContainer container) throws SlickException {        
+
+	public static void main(String[] args) {
+		try {
+			AppGameContainer app = new AppGameContainer(new Game());
+			app.setDisplayMode(800, 600, false);
+			app.start();
+			//app.setAlwaysRender(true);
+
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void init(GameContainer container) throws SlickException {
 		int i;
-		
+
 		p = new Player();
 		pet = new Pet(p, map);
-		
+
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 		while (map.collidesWall(p.getPos_x(), p.getPos_y())) {
-			p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
-		}
-		
-		pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
-		while (map.collidesWall(pet.getPos_x(), pet.getPos_y())) {
-			pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
+			p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 		}
 
-		//map.addEntity(p);
+		pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+		while (map.collidesWall(pet.getPos_x(), pet.getPos_y())) {
+			pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+		}
+
+		// map.addEntity(p);
 		map.addPlayer(p);
 		map.addEntity(pet);
 		for (i = 0; i < NUM_MONSTERS; i++) {
 			Monster m = new Monster(map);
 			m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 			while (map.collidesWall(m.getPos_x(), m.getPos_y())) {
-				m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
+				m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 			}
 			map.addEntity(m);
 		}
-		
-//		while (isRunning && !p.isDead() && !map.allDead()) {
-//			moveEntities();
-//			outputMap = drawWorld();
-//			handleInput(readInput());
-//			turns++;
-//		}
-//		
-//		if (map.allDead()) {
-//			drawVictoryMessage();
-//		}
-//		
-//		if (p.isDead()) {
-//			drawDeathMessage();
-//		}
-		
-//		System.exit(0);
 	}
-	
+
 	private static int readInput() {
 		Scanner kb = new Scanner(System.in);
 		String entered = "";
-				
-		while(true)	{
+
+		while (true) {
 			entered = kb.next();
-			if((entered.equals("w")) || (entered.equals("a")) || (entered.equals("s")) || (entered.equals("d"))) {
-				return Integer.valueOf(entered.charAt(0));				
+			if ((entered.equals("w")) || (entered.equals("a"))
+					|| (entered.equals("s")) || (entered.equals("d"))) {
+				return Integer.valueOf(entered.charAt(0));
 			}
 		}
 	}
-	
-	private static void handleInput(int key) {
-		int new_x, new_y;
-		new_x = p.getPos_x();
-		new_y = p.getPos_y();
-		
-		switch (key) {
-			case 119: //w up
-				new_y = (p.getPos_y()-1);
-				break;
-			case 115: // s down
-				new_y = (p.getPos_y()+1);
-				break;
-			case 97: // a left
-				new_x = (p.getPos_x()-1);
-				break;
-			case 100: // d right
-				new_x = (p.getPos_x()+1);
-				break;
-			default:
-				break;
-		}
-		
-		if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0) && (new_y < WORLD_HEIGHT)) {
-			if (!map.collides(new_x, new_y)) {
-				map.collidesItem(new_x, new_y);
-				p.setPos(new_x, new_y);
-			}
-		}
-	}
-	
+
 	private static String drawWorld() {
 		int x1, x2, y1, y2;
 		int window_size = WINDOW_SIZE;
@@ -146,43 +104,81 @@ public class Game extends BasicGame {
 		y1 = y1 > 0 ? y1 : 0;
 		y2 = p.getPos_y() + window_size;
 		y2 = y2 < WORLD_HEIGHT ? y2 : WORLD_HEIGHT;
-		return map.draw(x1,x2,y1,y2);
+		return map.draw(x1, x2, y1, y2);
 	}
-	
+
 	private static void drawDeathMessage() {
-		System.out.println("You survived " + turns + " turns, but now you're dead!");
+		System.out.println("You survived " + turns
+				+ " turns, but now you're dead!");
 	}
 
 	private static void drawVictoryMessage() {
-		System.out.println("You killed all evil monsters in " + turns + " turns, yay!");
+		System.out.println("You killed all evil monsters in " + turns
+				+ " turns, yay!");
 	}
-	
+
 	private static void moveEntities() {
 		map.moveEntities();
 	}
 
-    @Override
-    public void update(GameContainer container, int delta) throws SlickException {
-		moveEntities();
-		System.out.println(outputMap = drawWorld());
-		handleInput(readInput());
-		turns++;
-	
-		if (map.allDead()) {
-			drawVictoryMessage();
-		}
+	@Override
+	public void update(GameContainer container, int delta) throws SlickException {
+		boolean buttonPressed = true;
+		int new_x, new_y;
+		new_x = p.getPos_x();
+		new_y = p.getPos_y();
 		
-		if (p.isDead()) {
-			drawDeathMessage();
-		}    	
-    }
+		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
+			new_y = (p.getPos_y() - 1);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
+			new_y = (p.getPos_y() + 1);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
+			new_x = (p.getPos_x() - 1);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+			new_x = (p.getPos_x() + 1);
+			buttonPressed = true;
+		}
 
-    @Override
-    public void render(GameContainer container, Graphics g)
-            throws SlickException {
-    	if (outputMap != null) {
-        g.drawString(outputMap, 10, 10);
-    	}
-    }
+		if (buttonPressed) {
+			buttonPressed = false;
+
+			turns++;
+
+			moveEntities();
+
+			System.out.println(outputMap = drawWorld());
+			
+			if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0)
+					&& (new_y < WORLD_HEIGHT)) {
+				if (!map.collides(new_x, new_y)) {
+					map.collidesItem(new_x, new_y);
+					p.setPos(new_x, new_y);
+				}
+			}
+
+			if (map.allDead()) {
+				drawVictoryMessage();
+			}
+
+			if (p.isDead()) {
+				drawDeathMessage();
+			}
+			
+		}
+	}
+
+	@Override
+	public void render(GameContainer container, Graphics g)
+			throws SlickException {
+		if (outputMap != null) {
+			g.drawString(outputMap, 1, 1);
+		}
+	}
 
 }
