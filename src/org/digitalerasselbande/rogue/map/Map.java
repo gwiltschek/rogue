@@ -35,8 +35,10 @@ public class Map {
 		}
 
 		Room a = new Room(this);
+		rooms.add(a);
 		for (int i = 0; i < Game.NUM_ROOMS - 1; i++) {
 			Room b = new Room(this);
+			rooms.add(b);
 			connect(a, b);
 			a = b;
 		}		
