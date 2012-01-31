@@ -98,6 +98,13 @@ public class Map {
 		return collidesWall(x, y);
 	}
 
+	public boolean collidesPlayer(int x, int y) {
+		if ((p.getPos_x() == x) && (p.getPos_y() == y)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean collidesWall(int x, int y) {
 		System.out.println(x + " " + y);
 		if (map[x][y] != " ") {

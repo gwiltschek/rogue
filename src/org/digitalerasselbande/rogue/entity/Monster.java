@@ -25,13 +25,13 @@ public class Monster extends Entity {
 		}
 		if (new Random().nextBoolean()) {
 			new_pos = (this.getPos_x() + m);
-			if ((new_pos >= 0) && (new_pos < Game.WORLD_WIDTH) && (!map.collidesWall(new_pos, this.getPos_y()))) {
+			if (!(map.collidesPlayer(new_pos, this.getPos_y())) && (new_pos >= 0) && (new_pos < Game.WORLD_WIDTH) && (!map.collidesWall(new_pos, this.getPos_y()))) {
 				this.setPos_x(new_pos);				
 			}
 		}
 		else {
 			new_pos = this.getPos_y() + m;
-			if ((new_pos >= 0) && (new_pos < Game.WORLD_HEIGHT) && (!map.collidesWall(this.getPos_x(), new_pos))) {
+			if (!(map.collidesPlayer(this.getPos_x(), new_pos)) && (new_pos >= 0) && (new_pos < Game.WORLD_HEIGHT) && (!map.collidesWall(this.getPos_x(), new_pos))) {
 				this.setPos_y(new_pos);
 			}
 		}
