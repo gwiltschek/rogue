@@ -12,9 +12,9 @@ import org.digitalerasselbande.rogue.map.Map;
 
 public class Game {
 
-	public static final int WORLD_WIDTH = 32;
-	public static final int WORLD_HEIGHT = 32;
-	private static final int NUM_MONSTERS = 10;
+	public static final int WORLD_WIDTH = 16;
+	public static final int WORLD_HEIGHT = 16;
+	private static final int NUM_MONSTERS = 3;
 	
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
@@ -28,7 +28,7 @@ public class Game {
 		map.addPlayer(p);
 		
 		for (i = 0; i < NUM_MONSTERS; i++) {
-			Monster m = new Monster();
+			Monster m = new Monster(map);
 			m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 			map.addEntity(m);
 		}

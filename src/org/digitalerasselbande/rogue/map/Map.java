@@ -52,9 +52,9 @@ public class Map {
 		
 		// add entities
 		for(Entity e : entites) {
-			output[e.getPos_x()][e.getPos_y()] = e.getSymbol();
+			output[e.getPos_x()][e.getPos_y()] = "\033[31m" + e.getSymbol() + "\033[0m";
 		}
-		output[p.getPos_x()][p.getPos_y()] = p.getSymbol();
+		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
 		
 		// draw output map
 		for (y = 0; y < w; y++) {
@@ -89,6 +89,13 @@ public class Map {
 			}
 		}
 		
+		if (map[x][y] != " ") {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean collidesWall(int x, int y) {
 		if (map[x][y] != " ") {
 			return true;
 		}
