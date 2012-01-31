@@ -94,14 +94,12 @@ public class Map {
 				return true;
 			}
 		}
-		
-		if (map[x][y] != " ") {
-			return true;
-		}
-		return false;
+
+		return collidesWall(x, y);
 	}
 
 	public boolean collidesWall(int x, int y) {
+		System.out.println(x + " " + y);
 		if (map[x][y] != " ") {
 			return true;
 		}

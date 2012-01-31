@@ -45,15 +45,17 @@ public class Game {
 	}
 	
 	private static int readInput() {
+		char[] c = new char[1];
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
-			return reader.readLine();
+			reader.read(c, 0, 1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 0;
 		}
+		
+		return Integer.valueOf(c[0]);	
 	}
 	
 	private static void handleInput(int key) {
@@ -77,8 +79,10 @@ public class Game {
 			default:
 		}
 		
-		if (!map.collides(new_x, new_y)) {
-			p.setPos(new_x, new_y);
+		if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0) && (new_y < WORLD_HEIGHT)) {
+			if (!map.collides(new_x, new_y)) {
+				p.setPos(new_x, new_y);
+			}
 		}
 		
 	}
