@@ -13,6 +13,7 @@ public class Map {
 	private int w;
 	private int h;
 	private LinkedList<Entity> entites = new LinkedList<Entity>();
+	private LinkedList<Room> rooms = new LinkedList<Room>();
 	private Player p;
 	private boolean allDead = true;
 	
@@ -33,55 +34,49 @@ public class Map {
 			}			
 		}
 
-		generateRoom();
-		generateRoom();
-		
-		generateRoom();
-
-		//generateDoors();
-		
-
+		Room a = new Room(this);
+		for (int i = 0; i < Game.NUM_ROOMS - 1; i++) {
+			Room b = new Room(this);
+			connect(a, b);
+			a = b;
+		}		
 	}
 
-	private void generateDoors() {
+	public String[][] getMap() {
+		return this.map;
+	}
+	
+	private void connect(Room a, Room b) {
 		Random r = new Random();
 		int x, y;
 		
-		for (y = 0; y < w; y++) {
-			for (x = 0; x < h; x++) {
-				if (map[x][y].equals(Game.WALL)) {
-					if (r.nextInt(10) == 0) {
-						map[x][y] = " ";
-					}
-				}
-			}
-		}
-	}
-	
-	private void generateRoom() {
-		Random r = new Random();
-		int min_room_w = 3;
-		int min_room_h = 3;
-		int max_room_w = 10;
-		int max_room_h = 10;
-		
-		// generate room dimensions
-		int room_w = min_room_w + r.nextInt(max_room_w);
-		int room_h = min_room_h + r.nextInt(max_room_h);
-		
-		// find a place to start
-		int room_x = 0 + r.nextInt(Game.WORLD_WIDTH) - room_w;
-		int room_y = 0 + r.nextInt(Game.WORLD_WIDTH) - room_h;
-		
-		if (room_x < 0) room_x = 0;
-		if (room_y < 0) room_y = 0;
+		int x_a = a.getRoom_x() + r.nextInt(a.getRoom_w());
+		int y_a = a.getRoom_y() + r.nextInt(a.getRoom_h());
 
-		// draw room into map
-		for (int y = room_y; y < room_y + room_h; y++) {
-			for (int x = room_x; x < room_x + room_w; x++) {
-				map[x][y] = " ";
-				
-			}
+		int x_b = b.getRoom_x() + r.nextInt(b.getRoom_w());
+		int y_b = b.getRoom_y() + r.nextInt(b.getRoom_h());
+		
+		int x_dir = -1;
+		// a left of b
+		if (x_a <= x_b) {
+			x_dir = 1;
+		}
+
+		int y_dir = -1;
+		// a above of b
+		if (y_a <= y_b) {
+			y_dir = 1;
+		}
+		
+		System.out.println(x_dir);
+		
+		for (x = x_a; x != x_b; x+=x_dir) {
+			map[x][y_a] = " ";
+		}
+		
+		// x should be be on line with room b now
+		for (y = y_a; y != y_b; y+=y_dir) {
+			map[x][y] = " ";
 		}
 	}
 	

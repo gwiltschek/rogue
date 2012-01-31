@@ -11,9 +11,10 @@ import org.digitalerasselbande.rogue.map.Map;
 
 public class Game {
 
-	public static final int WORLD_WIDTH = 32;
-	public static final int WORLD_HEIGHT = 32;
-	private static final int WINDOW_SIZE = 16;
+	public static final int NUM_ROOMS = 3;
+	public static final int WORLD_WIDTH = 48;
+	public static final int WORLD_HEIGHT = 48;
+	private static final int WINDOW_SIZE = 24;
 	private static final int NUM_MONSTERS = 2;
 	public static final String WALL = "I";
 	
