@@ -44,17 +44,7 @@ public class Map {
 			rooms.add(b);
 			connect(a, b);
 			a = b;
-		}		
-		
-		for (i = 0; i < Game.NUM_SIGNS; i++) {
-			Sign sign = new Sign();
-			sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
-			while (collidesWall(sign.getPos_x(), sign.getPos_y())) {
-				sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
-			}
-			addItem(sign);
-		}
-		
+		}				
 	}
 
 	public String[][] getMap() {

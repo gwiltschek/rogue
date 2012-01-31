@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import org.digitalerasselbande.rogue.game.Game;
+import org.digitalerasselbande.rogue.item.Sign;
 
 public class Room {
 	private int room_x;
@@ -46,9 +47,26 @@ public class Room {
 				map.getMap()[x][y] = Game.EMPTY_SPACE;
 			}
 		}
+	
+		// mighty random multiplier
+		if (r.nextBoolean() || r.nextBoolean()) {
+			Sign sign = new Sign();
+			sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
+			while (!inRoom(sign.getPos_x(), sign.getPos_y(), 1)) {
+				sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
+			}
+			map.addItem(sign);				
+		}
 	}
 
-
+	// check if coordinates are inside the room, with offset from wall, if needed 
+	public boolean inRoom(int x, int y, int offset) {
+		if ((x > room_x + offset) &&	(x < room_x + room_w - offset) && (y > room_y + offset) &&	(y < room_y + room_h - offset)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public int getRoom_x() {
 		return room_x;
 	}
