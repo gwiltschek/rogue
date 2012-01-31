@@ -86,7 +86,7 @@ public class Map {
 		b.addConnectedRoom(a);
 	}
 	
-	public void draw(int x1, int x2, int y1, int y2) {
+	public String draw(int x1, int x2, int y1, int y2) {
 		int x, y;
 		String[][] output = new String[w][h];
 
@@ -97,33 +97,29 @@ public class Map {
 			}			
 		}
 		
-		// add entities
+		// add items
 		for (Item item : items) {
-			output[item.getPos_x()][item.getPos_y()] = item.getSymbolString();
+			output[item.getPos_x()][item.getPos_y()] = item.getSymbol();
 		}
 		
+		// add entities
 		for(Entity e : entites) {
-			output[e.getPos_x()][e.getPos_y()] = e.getSymbolString();
+			output[e.getPos_x()][e.getPos_y()] = e.getSymbol();
 		}
 		
-		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
+		// add player
+		output[p.getPos_x()][p.getPos_y()] = p.getSymbol();
+				
+		String outputString = "";
 		
-		// player pos
-		System.out.println("x: " + p.getPos_x() + " y: " + p.getPos_y());
-		
-		// draw output map window
 		for (y = y1; y < y2; y++) {
 			for (x = x1; x < x2; x++) {
-				System.out.print(output[x][y]);
+				outputString += output[x][y];
 			}			
-			System.out.println();
+			outputString += "\n";
 		}
-		for (int i = 0; i < 15; i++) {
-			System.out.print("-");
-		}
-		
-		System.out.println();
-		System.out.println("HP: " + p.getHealth() + " | XP: " + p.getExp());
+		outputString += "HP: " + p.getHealth() + " | XP: " + p.getExp();
+		return outputString;
 
 	}
 

@@ -6,8 +6,18 @@ import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.map.Map;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
-public class Game {
+public class Game extends BasicGame {
+
+	public Game() {
+		super("rogue");
+	}
 
 	public static final int NUM_ROOMS = 3;
 	public static final int WORLD_WIDTH = 48;
@@ -25,8 +35,21 @@ public class Game {
 	private static Pet pet;
 	private static int turns = 0;
 	
+	public String outputMap;
+	
 	public static void main(String [ ] args) {
+        try {
+            AppGameContainer app = new AppGameContainer(new Game());
+            app.start();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+       }
+        
+        @Override
+        public void init(GameContainer container) throws SlickException {        
 		int i;
+		
 		p = new Player();
 		pet = new Pet(p, map);
 		
@@ -52,22 +75,22 @@ public class Game {
 			map.addEntity(m);
 		}
 		
-		while (isRunning && !p.isDead() && !map.allDead()) {
-			moveEntities();
-			drawWorld();
-			handleInput(readInput());
-			turns++;
-		}
+//		while (isRunning && !p.isDead() && !map.allDead()) {
+//			moveEntities();
+//			outputMap = drawWorld();
+//			handleInput(readInput());
+//			turns++;
+//		}
+//		
+//		if (map.allDead()) {
+//			drawVictoryMessage();
+//		}
+//		
+//		if (p.isDead()) {
+//			drawDeathMessage();
+//		}
 		
-		if (map.allDead()) {
-			drawVictoryMessage();
-		}
-		
-		if (p.isDead()) {
-			drawDeathMessage();
-		}
-		
-		System.exit(0);
+//		System.exit(0);
 	}
 	
 	private static int readInput() {
@@ -112,7 +135,7 @@ public class Game {
 		}
 	}
 	
-	private static void drawWorld() {
+	private static String drawWorld() {
 		int x1, x2, y1, y2;
 		int window_size = WINDOW_SIZE;
 		x1 = p.getPos_x() - window_size;
@@ -123,7 +146,7 @@ public class Game {
 		y1 = y1 > 0 ? y1 : 0;
 		y2 = p.getPos_y() + window_size;
 		y2 = y2 < WORLD_HEIGHT ? y2 : WORLD_HEIGHT;
-		map.draw(x1,x2,y1,y2);
+		return map.draw(x1,x2,y1,y2);
 	}
 	
 	private static void drawDeathMessage() {
@@ -137,4 +160,29 @@ public class Game {
 	private static void moveEntities() {
 		map.moveEntities();
 	}
+
+    @Override
+    public void update(GameContainer container, int delta) throws SlickException {
+		moveEntities();
+		System.out.println(outputMap = drawWorld());
+		handleInput(readInput());
+		turns++;
+	
+		if (map.allDead()) {
+			drawVictoryMessage();
+		}
+		
+		if (p.isDead()) {
+			drawDeathMessage();
+		}    	
+    }
+
+    @Override
+    public void render(GameContainer container, Graphics g)
+            throws SlickException {
+    	if (outputMap != null) {
+        g.drawString(outputMap, 10, 10);
+    	}
+    }
+
 }
