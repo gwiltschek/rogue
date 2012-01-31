@@ -16,8 +16,7 @@ public class Monster extends Entity {
 		this.setSymbolString("\033[31m" + this.getSymbol() + "\033[0m");
 		setDrop(new Potion());
 		
-		setHealth(50 + new Random().nextInt(50));
-		setHealth(1 + new Random().nextInt(1));
+		setHealth(35 + new Random().nextInt(70));
 		this.map = map;
 	}	
 	

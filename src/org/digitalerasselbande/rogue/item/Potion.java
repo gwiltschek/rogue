@@ -28,7 +28,7 @@ public class Potion extends Item {
 		
 		System.out.println("You found a potion and drank it.");
 		
-		if (r.nextInt(3) == 0) {
+		if (r.nextInt(10) == 0) {
 			System.out.println("Sadly it was poison. You die. Sorry.");
 			p.setHealth(-1);
 			return;
