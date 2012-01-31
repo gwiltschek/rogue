@@ -12,7 +12,7 @@ public class Pet extends Entity {
 		this.setAttack(15);
 		this.setSymbol("*");
 		this.setSymbolString("\033[34m" + this.getSymbol() + "\033[0m");
-
+		this.setIsPushable(true);
 		this.owner = owner;
 		this.map = map;
 	}

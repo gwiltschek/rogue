@@ -155,7 +155,7 @@ public class Map {
 	// CLEAN ME TODO
 	public boolean collides(int x, int y) {
 		for (Entity e: entites) {
-			if ((e != (Entity)p) && (e.getPos_x() == x) && (e.getPos_y() == y)) {
+			if ((e != (Entity)p) && (e.getPos_x() == x) && (e.getPos_y() == y) && (!e.isPushable())) {
 				p.setHealth(p.getHealth()-e.getAttack());
 				e.setHealth(e.getHealth()-p.getAttack());
 				System.out.println("ATK, ENEMY HP " + e.getHealth());

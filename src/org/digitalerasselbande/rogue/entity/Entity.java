@@ -8,7 +8,7 @@ public class Entity {
 	private int pos_y;
 	private String symbol = "";
 	private String symbolString = "";
-	
+	private boolean isPushable = false;
 	private int health = 100;
 	private int attack = 10;
 	private int exp = 0;
@@ -19,6 +19,13 @@ public class Entity {
 		return isDead;
 	}
 	
+	public boolean isPushable() {
+		return isPushable;
+	}
+	
+	public void setIsPushable(boolean pushable) {
+		this.isPushable = pushable;
+	}
 	
 	public int getPos_x() {
 		return pos_x;
