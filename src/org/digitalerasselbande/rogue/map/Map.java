@@ -86,12 +86,12 @@ public class Map {
 		System.out.println(x_dir);
 		
 		for (x = x_a; x != x_b; x+=x_dir) {
-			map[x][y_a] = " ";
+			map[x][y_a] = Game.EMPTY_SPACE;
 		}
 		
 		// x should be be on line with room b now
 		for (y = y_a; y != y_b; y+=y_dir) {
-			map[x][y] = " ";
+			map[x][y] = Game.EMPTY_SPACE;
 		}
 		
 		a.addConnectedRoom(b);
@@ -121,7 +121,7 @@ public class Map {
 		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
 		
 		// player pos
-		System.out.println(p.getPos_x() + " " + p.getPos_y());
+		System.out.println("x: " + p.getPos_x() + " y: " + p.getPos_y());
 		
 		// draw output map window
 		for (y = y1; y < y2; y++) {
@@ -176,6 +176,7 @@ public class Map {
 		return collidesWall(x, y);
 	}
 
+	// check if something collides with the player
 	public boolean collidesPlayer(int x, int y) {
 		if ((p.getPos_x() == x) && (p.getPos_y() == y)) {
 			return true;
@@ -183,6 +184,7 @@ public class Map {
 		return false;
 	}
 	
+	// check if there's an item at x/y
 	public void collidesItem(int x, int y) {
 		Item itemToRemove = null;
 		for (Item item : items) {
@@ -199,8 +201,9 @@ public class Map {
 		}
 	}
 	
+	// check for a wall at x, y
 	public boolean collidesWall(int x, int y) {
-		if (map[x][y] != " ") {
+		if (map[x][y] != Game.EMPTY_SPACE) {
 			return true;
 		}
 		return false;

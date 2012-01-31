@@ -43,7 +43,7 @@ public class Room {
 		// draw room into map
 		for (int y = room_y; y < room_y + room_h; y++) {
 			for (int x = room_x; x < room_x + room_w; x++) {
-				map.getMap()[x][y] = " ";
+				map.getMap()[x][y] = Game.EMPTY_SPACE;
 			}
 		}
 	}
