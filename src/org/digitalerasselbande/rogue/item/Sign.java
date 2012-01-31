@@ -24,6 +24,7 @@ public class Sign extends Item {
 	
 	@Override
 	public void onCollision(Player p) {
+		// TODO push the message somehow to the map.draw() method
 		System.out.println("The sign says: " + message);
 	}
 }
