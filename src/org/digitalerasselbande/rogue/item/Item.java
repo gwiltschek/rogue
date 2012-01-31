@@ -8,8 +8,17 @@ public class Item {
 
 	private boolean pickable;
 	private String symbol;
+	private String symbolString;
 	private int pos_x;
 	private int pos_y;
+	
+	public String getSymbolString() {
+		return symbolString;
+	}
+
+	public void setSymbolString(String symbolString) {
+		this.symbolString = symbolString;
+	}
 	
 	public int getPos_x() {
 		return pos_x;

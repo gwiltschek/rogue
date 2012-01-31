@@ -17,6 +17,7 @@ public class Sign extends Item {
 	
 	public Sign() {
 		this.setSymbol("T");
+		this.setSymbolString(this.getSymbol());
 		this.setPickable(false);
 		this.message = messages[new Random().nextInt(messages.length)];
 	}

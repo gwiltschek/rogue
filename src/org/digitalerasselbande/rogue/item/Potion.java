@@ -11,6 +11,7 @@ public class Potion extends Item {
 	public Potion() {
 		this.setPickable(true);
 		this.setSymbol("d");
+		this.setSymbolString(this.getSymbol());
 	}
 
 	public int getHealth() {
