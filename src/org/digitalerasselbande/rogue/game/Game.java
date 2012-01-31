@@ -3,6 +3,7 @@ package org.digitalerasselbande.rogue.game;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Player;
@@ -10,10 +11,11 @@ import org.digitalerasselbande.rogue.map.Map;
 
 public class Game {
 
-	public static final int WORLD_WIDTH = 128;
-	public static final int WORLD_HEIGHT = 128;
-	private static final int WINDOW_SIZE = 8;
-	private static final int NUM_MONSTERS = 12;
+	public static final int WORLD_WIDTH = 32;
+	public static final int WORLD_HEIGHT = 32;
+	private static final int WINDOW_SIZE = 16;
+	private static final int NUM_MONSTERS = 2;
+	public static final String WALL = "I";
 	
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
@@ -23,13 +25,22 @@ public class Game {
 	public static void main(String [ ] args) {
 		int i;
 		p = new Player();
+		
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+
+		while (map.collidesWall(p.getPos_x(), p.getPos_y())) {
+			p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
+		}
+		
 		//map.addEntity(p);
 		map.addPlayer(p);
 		
 		for (i = 0; i < NUM_MONSTERS; i++) {
 			Monster m = new Monster(map);
 			m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+			while (map.collidesWall(m.getPos_x(), m.getPos_y())) {
+				m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
+			}
 			map.addEntity(m);
 		}
 		
@@ -52,17 +63,15 @@ public class Game {
 	}
 	
 	private static int readInput() {
-		char[] c = new char[1];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		
-		try {
-			reader.read(c, 0, 1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Scanner kb = new Scanner(System.in);
+		String entered = "";
+				
+		while(true)	{
+			entered = kb.next();
+			if((entered.equals("w")) || (entered.equals("a")) || (entered.equals("s")) || (entered.equals("d"))) {
+				return Integer.valueOf(entered.charAt(0));				
+			}
 		}
-		
-		return Integer.valueOf(c[0]);	
 	}
 	
 	private static void handleInput(int key) {
@@ -84,6 +93,7 @@ public class Game {
 				new_x = (p.getPos_x()+1);
 				break;
 			default:
+				break;
 		}
 		
 		if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0) && (new_y < WORLD_HEIGHT)) {
@@ -91,7 +101,6 @@ public class Game {
 				p.setPos(new_x, new_y);
 			}
 		}
-		
 	}
 	
 	private static void drawWorld() {
@@ -105,11 +114,7 @@ public class Game {
 		y1 = y1 > 0 ? y1 : 0;
 		y2 = p.getPos_y() + window_size;
 		y2 = y2 < WORLD_HEIGHT ? y2 : WORLD_HEIGHT;
-		
-
 		map.draw(x1,x2,y1,y2);
-		
-		
 	}
 	
 	private static void drawDeathMessage() {
