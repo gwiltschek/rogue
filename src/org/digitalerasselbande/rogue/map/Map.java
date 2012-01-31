@@ -7,7 +7,6 @@ import org.digitalerasselbande.rogue.entity.Entity;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.game.Game;
 import org.digitalerasselbande.rogue.item.Item;
-import org.digitalerasselbande.rogue.item.Sign;
 
 public class Map {
 
@@ -26,7 +25,6 @@ public class Map {
 	// constructor
 	public Map(int w, int h) {
 		int x, y, i;
-		Random r = new Random();
 		map = new String[w][h];
 		this.w = w;
 		this.h = h;

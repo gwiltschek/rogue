@@ -3,7 +3,6 @@ package org.digitalerasselbande.rogue.entity;
 import java.util.Random;
 
 import org.digitalerasselbande.rogue.game.Game;
-import org.digitalerasselbande.rogue.item.Item;
 import org.digitalerasselbande.rogue.item.Potion;
 import org.digitalerasselbande.rogue.map.Map;
 

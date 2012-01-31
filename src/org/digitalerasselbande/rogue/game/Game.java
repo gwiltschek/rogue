@@ -1,8 +1,5 @@
 package org.digitalerasselbande.rogue.game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import org.digitalerasselbande.rogue.entity.Monster;
