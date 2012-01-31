@@ -17,6 +17,7 @@ public class Game {
 	public static final int WORLD_HEIGHT = 48;
 	private static final int WINDOW_SIZE = 24;
 	private static final int NUM_MONSTERS = 2;
+	public static final int NUM_SIGNS = 4;
 	public static final String WALL = "I";
 	
 	private static boolean isRunning = true;
@@ -29,8 +30,8 @@ public class Game {
 		int i;
 		p = new Player();
 		pet = new Pet(p, map);
+		
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
-
 		while (map.collidesWall(p.getPos_x(), p.getPos_y())) {
 			p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
 		}
@@ -39,7 +40,7 @@ public class Game {
 		while (map.collidesWall(pet.getPos_x(), pet.getPos_y())) {
 			pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
 		}
-		
+
 		//map.addEntity(p);
 		map.addPlayer(p);
 		map.addEntity(pet);
@@ -106,6 +107,7 @@ public class Game {
 		
 		if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0) && (new_y < WORLD_HEIGHT)) {
 			if (!map.collides(new_x, new_y)) {
+				map.collidesItem(new_x, new_y);
 				p.setPos(new_x, new_y);
 			}
 		}

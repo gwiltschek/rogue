@@ -6,6 +6,8 @@ import java.util.Random;
 import org.digitalerasselbande.rogue.entity.Entity;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.game.Game;
+import org.digitalerasselbande.rogue.item.Item;
+import org.digitalerasselbande.rogue.item.Sign;
 
 public class Map {
 
@@ -13,6 +15,7 @@ public class Map {
 	private int w;
 	private int h;
 	private LinkedList<Entity> entites = new LinkedList<Entity>();
+	private LinkedList<Item> items = new LinkedList<Item>();
 	private LinkedList<Room> rooms = new LinkedList<Room>();
 	private Player p;
 	private boolean allDead = true;
@@ -22,7 +25,7 @@ public class Map {
 	
 	// constructor
 	public Map(int w, int h) {
-		int x, y;
+		int x, y, i;
 		Random r = new Random();
 		map = new String[w][h];
 		this.w = w;
@@ -36,12 +39,22 @@ public class Map {
 
 		Room a = new Room(this);
 		rooms.add(a);
-		for (int i = 0; i < Game.NUM_ROOMS - 1; i++) {
+		for (i = 0; i < Game.NUM_ROOMS - 1; i++) {
 			Room b = new Room(this);
 			rooms.add(b);
 			connect(a, b);
 			a = b;
 		}		
+		
+		for (i = 0; i < Game.NUM_SIGNS; i++) {
+			Sign sign = new Sign();
+			sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
+			while (collidesWall(sign.getPos_x(), sign.getPos_y())) {
+				sign.randomizePosition(Game.WORLD_WIDTH, Game.WORLD_HEIGHT);
+			}
+			addItem(sign);
+		}
+		
 	}
 
 	public String[][] getMap() {
@@ -97,11 +110,16 @@ public class Map {
 		}
 		
 		// add entities
+		for (Item item : items) {
+			output[item.getPos_x()][item.getPos_y()] = item.getSymbol();
+		}
+		
 		for(Entity e : entites) {
 			output[e.getPos_x()][e.getPos_y()] = e.getSymbolString(); // "\033[31m" + e.getSymbol() + "\033[0m";
 		}
+		
 		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
-
+		
 		// player pos
 		System.out.println(p.getPos_x() + " " + p.getPos_y());
 		
@@ -129,7 +147,11 @@ public class Map {
 		allDead = false;
 		entites.add(e);
 	}
-	
+
+	public void addItem(Item i) {
+		items.add(i);
+	}
+
 	// CLEAN ME TODO
 	public boolean collides(int x, int y) {
 		for (Entity e: entites) {
@@ -156,6 +178,15 @@ public class Map {
 			return true;
 		}
 		return false;
+	}
+	
+	public void collidesItem(int x, int y) {
+		for (Item item : items) {
+			if ((item.getPos_x() == x) && (item.getPos_y() == y)) {
+				item.onCollision();
+			}
+		}
+		
 	}
 	
 	public boolean collidesWall(int x, int y) {
