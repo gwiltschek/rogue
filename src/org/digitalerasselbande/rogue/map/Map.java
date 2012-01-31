@@ -14,6 +14,7 @@ public class Map {
 	private int h;
 	private LinkedList<Entity> entites = new LinkedList<Entity>();
 	private Player p;
+	private boolean allDead = true;
 	
 	// the map
 	private String[][] map;
@@ -78,6 +79,7 @@ public class Map {
 	}
 	
 	public void addEntity(Entity e) {
+		allDead = false;
 		entites.add(e);
 	}
 	
@@ -91,6 +93,9 @@ public class Map {
 				if (e.isDead) {
 					entites.remove(e);
 					p.setExp(p.getExp() + e.getEarnsExp());
+					if (entites.size() == 0) {
+						allDead = true;
+					}
 				}
 				return true;
 			}
@@ -118,5 +123,9 @@ public class Map {
 		for (Entity e : entites) {
 			e.update();
 		}
+	}
+	
+	public boolean allDead() {
+		return allDead;
 	}
 }

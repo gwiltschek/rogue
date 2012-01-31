@@ -12,17 +12,18 @@ public class Game {
 
 	public static final int WORLD_WIDTH = 16;
 	public static final int WORLD_HEIGHT = 16;
-	private static final int NUM_MONSTERS = 3;
+	private static final int NUM_MONSTERS = 2;
 	
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 	private static Player p;
+	private static int turns = 0;
 	
 	public static void main(String [ ] args) {
 		int i;
 		p = new Player();
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
-		map.addEntity(p);
+		//map.addEntity(p);
 		map.addPlayer(p);
 		
 		for (i = 0; i < NUM_MONSTERS; i++) {
@@ -31,10 +32,15 @@ public class Game {
 			map.addEntity(m);
 		}
 		
-		while (isRunning && !p.isDead()) {
+		while (isRunning && !p.isDead() && !map.allDead()) {
 			moveEntities();
 			drawWorld();
 			handleInput(readInput());
+			turns++;
+		}
+		
+		if (map.allDead()) {
+			drawVictoryMessage();
 		}
 		
 		if (p.isDead()) {
@@ -93,6 +99,10 @@ public class Game {
 	
 	private static void drawDeathMessage() {
 		System.out.println("You're dead");
+	}
+
+	private static void drawVictoryMessage() {
+		System.out.println("You killed all evil monsters in " + turns + " turns, yay!");
 	}
 	
 	private static void moveEntities() {

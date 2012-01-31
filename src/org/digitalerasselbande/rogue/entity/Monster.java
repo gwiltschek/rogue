@@ -35,8 +35,5 @@ public class Monster extends Entity {
 				this.setPos_y(new_pos);
 			}
 		}
-		
-		
 	}
-	
 }
