@@ -62,16 +62,16 @@ public class Game {
 		new_y = p.getPos_y();
 		
 		switch (key) {
-			case 119: //w/up
+			case 119: //w up
 				new_y = (p.getPos_y()-1);
 				break;
-			case 115: // s/down
+			case 115: // s down
 				new_y = (p.getPos_y()+1);
 				break;
-			case 97: // a/left
+			case 97: // a left
 				new_x = (p.getPos_x()-1);
 				break;
-			case 100: // d/right
+			case 100: // d right
 				new_x = (p.getPos_x()+1);
 				break;
 			default:
