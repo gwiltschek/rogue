@@ -1,5 +1,6 @@
 package org.digitalerasselbande.rogue.map;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.digitalerasselbande.rogue.game.Game;
@@ -10,10 +11,15 @@ public class Room {
 	private int room_w;
 	private int room_h;
 	private Map map;
+	private LinkedList<Room> connectedWith = new LinkedList<Room>();
 	
 	public Room(Map map) {
 		this.map = map;
 		generateRoom();
+	}
+	
+	public void addConnectedRoom(Room r) {
+		connectedWith.add(r);
 	}
 	
 	private void generateRoom() {

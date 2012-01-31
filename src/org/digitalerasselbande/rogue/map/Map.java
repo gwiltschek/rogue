@@ -80,6 +80,9 @@ public class Map {
 		for (y = y_a; y != y_b; y+=y_dir) {
 			map[x][y] = " ";
 		}
+		
+		a.addConnectedRoom(b);
+		b.addConnectedRoom(a);
 	}
 	
 	public void draw(int x1, int x2, int y1, int y2) {
