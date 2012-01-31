@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 import org.digitalerasselbande.rogue.entity.Monster;
+import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.map.Map;
 
@@ -21,21 +22,27 @@ public class Game {
 	private static boolean isRunning = true;
 	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 	private static Player p;
+	private static Pet pet;
 	private static int turns = 0;
 	
 	public static void main(String [ ] args) {
 		int i;
 		p = new Player();
-		
+		pet = new Pet(p, map);
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
 
 		while (map.collidesWall(p.getPos_x(), p.getPos_y())) {
 			p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
 		}
 		
+		pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+		while (map.collidesWall(pet.getPos_x(), pet.getPos_y())) {
+			pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);			
+		}
+		
 		//map.addEntity(p);
 		map.addPlayer(p);
-		
+		map.addEntity(pet);
 		for (i = 0; i < NUM_MONSTERS; i++) {
 			Monster m = new Monster(map);
 			m.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
@@ -129,5 +136,4 @@ public class Game {
 	private static void moveEntities() {
 		map.moveEntities();
 	}
-	
 }

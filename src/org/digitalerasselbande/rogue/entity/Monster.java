@@ -10,7 +10,9 @@ public class Monster extends Entity {
 	private Map map;
 	
 	public Monster(Map map) {
-		setSymbol("!");
+		this.setSymbol("!");
+		this.setSymbolString("\033[31m" + this.getSymbol() + "\033[0m");
+
 		setHealth(50 + new Random().nextInt(50));
 		this.map = map;
 	}	

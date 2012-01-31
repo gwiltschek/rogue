@@ -7,6 +7,8 @@ public class Entity {
 	private int pos_x;
 	private int pos_y;
 	private String symbol = "";
+	private String symbolString = "";
+	
 	private int health = 100;
 	private int attack = 10;
 	private int exp = 0;
@@ -51,6 +53,14 @@ public class Entity {
 
 	public void setSymbol(String s) {
 		this.symbol = s;
+	}
+
+	public String getSymbolString() {
+		return symbolString;
+	}
+
+	public void setSymbolString(String s) {
+		this.symbolString = s;
 	}
 
 	public int getHealth() {

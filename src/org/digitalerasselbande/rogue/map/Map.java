@@ -98,7 +98,7 @@ public class Map {
 		
 		// add entities
 		for(Entity e : entites) {
-			output[e.getPos_x()][e.getPos_y()] = "\033[31m" + e.getSymbol() + "\033[0m";
+			output[e.getPos_x()][e.getPos_y()] = e.getSymbolString(); // "\033[31m" + e.getSymbol() + "\033[0m";
 		}
 		output[p.getPos_x()][p.getPos_y()] = "\033[32m" + p.getSymbol() + "\033[0m";
 
