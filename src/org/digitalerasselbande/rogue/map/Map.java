@@ -69,7 +69,7 @@ public class Map {
 		}
 		
 		System.out.println();
-		System.out.println("HP: " + p.getHealth());
+		System.out.println("HP: " + p.getHealth() + " | XP: " + p.getExp());
 
 	}
 
@@ -90,6 +90,7 @@ public class Map {
 				System.out.println("ATK, ENEMY HP " + e.getHealth());
 				if (e.isDead) {
 					entites.remove(e);
+					p.setExp(p.getExp() + e.getEarnsExp());
 				}
 				return true;
 			}

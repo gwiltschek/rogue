@@ -9,6 +9,8 @@ public class Entity {
 	private String symbol = "";
 	private int health = 100;
 	private int attack = 10;
+	private int exp = 0;
+	private int earnsExp = 5;
 	public boolean isDead = false;
 	
 	public boolean isDead() {
@@ -72,5 +74,25 @@ public class Entity {
 	
 	public void update() {
 		
+	}
+
+
+	public int getExp() {
+		return exp;
+	}
+
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+
+
+	public int getEarnsExp() {
+		return earnsExp;
+	}
+
+
+	public void setEarnsExp(int earnsExp) {
+		this.earnsExp = earnsExp;
 	}
 }
