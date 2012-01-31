@@ -2,6 +2,8 @@ package org.digitalerasselbande.rogue.entity;
 
 import java.util.Random;
 
+import org.digitalerasselbande.rogue.item.Item;
+
 public class Entity {
 
 	private int pos_x;
@@ -14,7 +16,16 @@ public class Entity {
 	private int exp = 0;
 	private int earnsExp = 5;
 	public boolean isDead = false;
+	private Item drop;
 	
+	public Item getDrop() {
+		return drop;
+	}
+
+	public void  setDrop(Item i) {
+		this.drop = i;
+	}
+
 	public boolean isDead() {
 		return isDead;
 	}

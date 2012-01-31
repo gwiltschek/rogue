@@ -3,6 +3,8 @@ package org.digitalerasselbande.rogue.entity;
 import java.util.Random;
 
 import org.digitalerasselbande.rogue.game.Game;
+import org.digitalerasselbande.rogue.item.Item;
+import org.digitalerasselbande.rogue.item.Potion;
 import org.digitalerasselbande.rogue.map.Map;
 
 public class Monster extends Entity {
@@ -12,8 +14,10 @@ public class Monster extends Entity {
 	public Monster(Map map) {
 		this.setSymbol("!");
 		this.setSymbolString("\033[31m" + this.getSymbol() + "\033[0m");
-
+		setDrop(new Potion());
+		
 		setHealth(50 + new Random().nextInt(50));
+		setHealth(1 + new Random().nextInt(1));
 		this.map = map;
 	}	
 	

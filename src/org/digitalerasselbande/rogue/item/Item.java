@@ -2,14 +2,25 @@ package org.digitalerasselbande.rogue.item;
 
 import java.util.Random;
 
+import org.digitalerasselbande.rogue.entity.Player;
+
 public class Item {
 
 	private boolean pickable = false;
 	private String symbol;
+	private int pos_x;
+	private int pos_y;
+	
+	
 	public int getPos_x() {
 		return pos_x;
 	}
 
+	public void setPos(int x, int y) {
+		this.pos_x = x;
+		this.pos_y = y;
+	}
+	
 	public void setPos_x(int pos_x) {
 		this.pos_x = pos_x;
 	}
@@ -22,9 +33,6 @@ public class Item {
 		this.pos_y = pos_y;
 	}
 
-	private int pos_x;
-	private int pos_y;
-	
 	public Item() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -38,7 +46,7 @@ public class Item {
 		this.pickable = pickable;
 	}
 	
-	public void onCollision() {
+	public void onCollision(Player p) {
 		
 	}
 

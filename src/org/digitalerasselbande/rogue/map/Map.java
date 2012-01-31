@@ -160,6 +160,9 @@ public class Map {
 				e.setHealth(e.getHealth()-p.getAttack());
 				System.out.println("ATK, ENEMY HP " + e.getHealth());
 				if (e.isDead) {
+					Item drop = e.getDrop();
+					drop.setPos(x, y);
+					addItem(drop);
 					entites.remove(e);
 					p.setExp(p.getExp() + e.getEarnsExp());
 					if (entites.size() == 0) {
@@ -181,12 +184,14 @@ public class Map {
 	}
 	
 	public void collidesItem(int x, int y) {
+		Item itemToRemove = null;
 		for (Item item : items) {
 			if ((item.getPos_x() == x) && (item.getPos_y() == y)) {
-				item.onCollision();
+				item.onCollision(p);
+				itemToRemove = item;
 			}
 		}
-		
+		items.remove(itemToRemove);
 	}
 	
 	public boolean collidesWall(int x, int y) {
