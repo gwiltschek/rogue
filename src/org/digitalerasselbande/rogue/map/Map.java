@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.digitalerasselbande.rogue.entity.Entity;
 import org.digitalerasselbande.rogue.entity.Player;
+import org.digitalerasselbande.rogue.game.Game;
 
 public class Map {
 
@@ -63,6 +64,10 @@ public class Map {
 			}			
 			System.out.println();
 		}
+		for (int i = 0; i < Game.WORLD_WIDTH; i++) {
+			System.out.print("-");
+		}
+		System.out.println();
 		System.out.println("HP: " + p.getHealth());
 
 	}
