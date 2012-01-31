@@ -191,7 +191,12 @@ public class Map {
 				itemToRemove = item;
 			}
 		}
-		items.remove(itemToRemove);
+		
+		if (itemToRemove != null) {
+			if (itemToRemove.isPickable()) {
+				items.remove(itemToRemove);			
+			}
+		}
 	}
 	
 	public boolean collidesWall(int x, int y) {

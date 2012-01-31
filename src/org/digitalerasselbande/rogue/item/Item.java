@@ -6,11 +6,10 @@ import org.digitalerasselbande.rogue.entity.Player;
 
 public class Item {
 
-	private boolean pickable = false;
+	private boolean pickable;
 	private String symbol;
 	private int pos_x;
 	private int pos_y;
-	
 	
 	public int getPos_x() {
 		return pos_x;
@@ -34,8 +33,6 @@ public class Item {
 	}
 
 	public Item() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean isPickable() {
