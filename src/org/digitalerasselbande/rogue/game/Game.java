@@ -38,13 +38,14 @@ public class Game extends BasicGame {
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
-
+	private boolean showMiniMap = true;
+	
 	public String outputMap;
 
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Game());
-			app.setDisplayMode(16*WORLD_WIDTH, 16*WORLD_HEIGHT, false);
+			app.setDisplayMode(16*WINDOW_SIZE, 16*WINDOW_SIZE, false);
 			app.setShowFPS(false);
 			app.start();
 			//app.setAlwaysRender(true);
@@ -61,6 +62,8 @@ public class Game extends BasicGame {
 	
 	private void resetWorld() {
 		int i;
+		showMiniMap = true;
+		turns = 0;
 		map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 		p = new Player();
 		pet = new Pet(p, map);
@@ -144,7 +147,11 @@ public class Game extends BasicGame {
 			resetWorld();
 			buttonPressed = false;
 		}
-
+		if (container.getInput().isKeyPressed(Input.KEY_M)) {
+			showMiniMap = !showMiniMap;
+			buttonPressed = false;
+		}
+		
 		if (buttonPressed) {
 			buttonPressed = false;
 			turns++;
@@ -173,11 +180,19 @@ public class Game extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		int x, y;
+		renderMap(container, g, 0, 0, 16, WINDOW_SIZE);
 		
+		// minimap
+		if (showMiniMap) {
+			renderMap(container, g, 0, 0, 2, WORLD_HEIGHT);			
+		}
+	}
+	
+	public void renderMap(GameContainer container, Graphics g, int x_start, int y_start, int tileSize, int size) {
+		int x, y;	
 		if (currentMap != null) {
-			for (y = 0; y < Game.WINDOW_SIZE; y++) {
-				for (x = 0; x < Game.WINDOW_SIZE; x++) {
+			for (y = 0; y < size; y++) {
+				for (x = 0; x < size; x++) {
 					if (currentMap[x][y] == Game.EMPTY_SPACE) {
 						g.setColor(Color.white);	
 					}
@@ -202,10 +217,9 @@ public class Game extends BasicGame {
 					else {
 						g.setColor(Color.blue);
 					}
-					g.fillRect(x*16, y*16, 16, 16);
+					g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);
 				}				
 			}			
 		}
 	}
-
 }
