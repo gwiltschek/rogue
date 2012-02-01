@@ -40,6 +40,7 @@ public class Game extends BasicGame {
 		try {
 			AppGameContainer app = new AppGameContainer(new Game());
 			app.setDisplayMode(16*WORLD_WIDTH, 16*WORLD_HEIGHT, false);
+			app.setShowFPS(false);
 			app.start();
 			//app.setAlwaysRender(true);
 
