@@ -1,11 +1,14 @@
 package org.digitalerasselbande.rogue.entity;
 
+import java.util.Random;
+
 import org.digitalerasselbande.rogue.map.Map;
 
 public class Pet extends Entity {
 
 	private Player owner;
 	private Map map;
+	private Random r = new Random();
 	
 	public Pet(Player owner, Map map) {
 		this.setHealth(50);
@@ -17,6 +20,10 @@ public class Pet extends Entity {
 		this.map = map;
 	}
 
+	private void makeSound() {
+		System.out.println("MIAU!");
+	}
+	
 	@Override
 	public void update() {
 		int new_pos_x = this.getPos_x();
@@ -39,8 +46,14 @@ public class Pet extends Entity {
 		
 		if (!map.collides(new_pos_x, new_pos_y)) {
 			//if (!map.collidesPlayer(new_pos_x, new_pos_y)) {
-				this.setPos(new_pos_x, new_pos_y);				
+				this.setPos(new_pos_x, new_pos_y);
 			//}
+		}
+		
+		if(r.nextInt(9) == 0) {
+			if (map.inSameRoom(this, owner)) {
+				makeSound();
+			}
 		}
 	}
 }

@@ -19,6 +19,10 @@ public class Player extends Entity {
 	}
 	
 	public void update() {
+		if (next == 0) {
+			return;
+		}
+		
 		int new_x, new_y;
 		new_x = this.getPos_x();
 		new_y = this.getPos_y();
