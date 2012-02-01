@@ -32,7 +32,7 @@ public class Game extends BasicGame {
 	public static final int MAX_ROOM_WIDTH = 6;
 	public static final int MAX_ROOM_HEIGHT = 6;
 	private static final int VIEW_RANGE = 3;
-	
+	private static int VIEW_RANGE_CURRENT = VIEW_RANGE;
 	private static Map map;
 	private static String[][] currentMap;
 	private static Player p;
@@ -160,6 +160,15 @@ public class Game extends BasicGame {
 			showMiniMap = !showMiniMap;
 			buttonPressed = false;
 		}
+		if (container.getInput().isKeyPressed(Input.KEY_V)) {
+			if (VIEW_RANGE_CURRENT == VIEW_RANGE) {
+				VIEW_RANGE_CURRENT = WINDOW_SIZE;
+			}
+			else {
+				VIEW_RANGE_CURRENT = VIEW_RANGE;
+			}
+			buttonPressed = false;
+		}
 
 		if (container.getInput().isKeyPressed(Input.KEY_Q)) {
 			drawDeathMessage(container.getGraphics());
@@ -241,8 +250,8 @@ public class Game extends BasicGame {
 			for (y = 0; y < size; y++) {
 				for (x = 0; x < size; x++) {
 					g.setColor(Color.black);
-					if (((y < p_y - VIEW_RANGE) || (y > p_y + VIEW_RANGE)) ||
-						((x < p_x - VIEW_RANGE) || (x > p_x + VIEW_RANGE))) {
+					if (((y < p_y - VIEW_RANGE_CURRENT) || (y > p_y + VIEW_RANGE_CURRENT)) ||
+						((x < p_x - VIEW_RANGE_CURRENT) || (x > p_x + VIEW_RANGE_CURRENT))) {
 						g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);							
 					}
 				}
