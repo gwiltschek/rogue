@@ -71,7 +71,7 @@ public class Game extends BasicGame {
 		turns = 0;
 		
 		map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
-		p = new Player();
+		p = new Player(map);
 		pet = new Pet(p, map);
 
 		p.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
@@ -138,26 +138,23 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		boolean buttonPressed = false;
-		int new_x, new_y;
-		new_x = p.getPos_x();
-		new_y = p.getPos_y();
 		
 		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
-			new_y = (p.getPos_y() - 1);
+			p.handleInput(Input.KEY_UP);
 			buttonPressed = true;
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
-			new_y = (p.getPos_y() + 1);
+			p.handleInput(Input.KEY_DOWN);
 			buttonPressed = true;
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
-			new_x = (p.getPos_x() - 1);
+			p.handleInput(Input.KEY_LEFT);
 			buttonPressed = true;
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
-			new_x = (p.getPos_x() + 1);
+			p.handleInput(Input.KEY_RIGHT);
 			buttonPressed = true;
-		}
+		}		
 		if (container.getInput().isKeyPressed(Input.KEY_DELETE)) {
 			resetWorld();
 			buttonPressed = false;
@@ -175,30 +172,12 @@ public class Game extends BasicGame {
 			}
 			buttonPressed = false;
 		}
-
-		if (container.getInput().isKeyPressed(Input.KEY_Q)) {
-			drawDeathMessage(container.getGraphics());
-			buttonPressed = false;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_W)) {
-			drawVictoryMessage(container.getGraphics());
-			buttonPressed = false;
-		}
 		
 		if (buttonPressed) {
 			buttonPressed = false;
 			turns++;
-			
+			p.update();
 			moveEntities();
-			
-			if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0)
-					&& (new_y < WORLD_HEIGHT)) {
-				if (!map.collides(new_x, new_y)) {
-					map.collidesItem(new_x, new_y);
-					p.setPos(new_x, new_y);
-				}
-			}
-
 			currentMap = drawWorld(); 
 			
 			if (map.allDead()) {

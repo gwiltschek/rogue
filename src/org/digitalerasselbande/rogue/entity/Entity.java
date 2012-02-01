@@ -101,7 +101,6 @@ public class Entity {
 	}
 	
 	public void update() {
-		
 	}
 
 

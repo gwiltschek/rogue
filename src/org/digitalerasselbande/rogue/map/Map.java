@@ -55,7 +55,7 @@ public class Map {
 
 					for (Room r : rooms) {
 						if (r.intersects(b)) {
-							intersects = true;	
+							intersects = true;
 						}
 					}
 				}
