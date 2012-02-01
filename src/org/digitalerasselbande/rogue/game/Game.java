@@ -78,9 +78,13 @@ public class Game extends BasicGame {
 		}
 
 		pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
-//		while (map.collidesWall(pet.getPos_x(), pet.getPos_y()) || (!map.inSameRoom(p, pet))) {
+		int tries = 0;
 		while (map.collidesWall(pet.getPos_x(), pet.getPos_y())) {
-			pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+			while (!map.inSameRoom(p, pet) && (tries < 50)) {
+				tries++;
+				pet.randomizePosition(WORLD_WIDTH, WORLD_HEIGHT);
+			}
+			tries = 0;
 		}
 
 		// map.addEntity(p);
