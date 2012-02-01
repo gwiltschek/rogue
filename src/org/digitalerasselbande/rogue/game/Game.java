@@ -31,7 +31,7 @@ public class Game extends BasicGame {
 	public static final int MIN_ROOM_HEIGHT = 4;
 	public static final int MAX_ROOM_WIDTH = 6;
 	public static final int MAX_ROOM_HEIGHT = 6;
-
+	private static final int VIEW_RANGE = 3;
 	
 	private static Map map;
 	private static String[][] currentMap;
@@ -226,9 +226,6 @@ public class Game extends BasicGame {
 					else if (currentMap[x][y] == "T") {
 						g.setColor(Color.yellow);
 					}
-					else if (currentMap[x][y] == "d") {
-						g.setColor(Color.orange);
-					}
 					else if (currentMap[x][y] == Game.WALL) {
 						g.setColor(Color.gray);
 					}
@@ -237,7 +234,19 @@ public class Game extends BasicGame {
 					}
 					g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);
 				}				
-			}			
+			}
+			int p_x = p.getPos_x();
+			int p_y = p.getPos_y();
+			
+			for (y = 0; y < size; y++) {
+				for (x = 0; x < size; x++) {
+					g.setColor(Color.black);
+					if (((y < p_y - VIEW_RANGE) || (y > p_y + VIEW_RANGE)) ||
+						((x < p_x - VIEW_RANGE) || (x > p_x + VIEW_RANGE))) {
+						g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);							
+					}
+				}
+			}
 		}
 		if (showMessage == true) {
 			x = 10;
