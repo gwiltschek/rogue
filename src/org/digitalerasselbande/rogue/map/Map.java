@@ -33,12 +33,14 @@ public class Map {
 		this.w = w;
 		this.h = h;
 		
+		// fill map with walls
 		for (y = 0; y < w; y++) {
 			for (x = 0; x < h; x++) {
 				map[x][y] = Game.WALL;	
 			}			
 		}
 
+		// generate rooms
 		boolean intersects = true;
 		Room a = new Room(this);
 		Room b = null;
@@ -52,12 +54,10 @@ public class Map {
 					b = new Room(this);
 
 					for (Room r : rooms) {
-						if (r.intersects(b)) {		
-							System.out.println("INTERSECTS");
-							intersects = true;
+						if (r.intersects(b)) {
+							intersects = true;	
 						}
 					}
-					
 				}
 			}
 			b.digRoom();
@@ -74,7 +74,6 @@ public class Map {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
