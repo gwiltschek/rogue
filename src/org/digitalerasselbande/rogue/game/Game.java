@@ -40,6 +40,9 @@ public class Game extends BasicGame {
 	private static int turns = 0;
 	private boolean showMiniMap = true;
 	
+	private static boolean showMessage = false;
+	private static String message = "";
+	
 	public String outputMap;
 
 	public static void main(String[] args) {
@@ -63,7 +66,10 @@ public class Game extends BasicGame {
 	private void resetWorld() {
 		int i;
 		showMiniMap = true;
+		showMessage = false;
+		message = "";
 		turns = 0;
+		
 		map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 		p = new Player();
 		pet = new Pet(p, map);
@@ -106,16 +112,19 @@ public class Game extends BasicGame {
 		return map.draw(x1, x2, y1, y2);
 	}
 
-	private static void drawDeathMessage() {
-		System.out.println("You survived " + turns
-				+ " turns, but now you're dead!");
+	private static void drawDeathMessage(Graphics g) {
+		drawMessage("You survived " + turns + " turns, but now you're dead!", g);
 	}
 
-	private static void drawVictoryMessage() {
-		System.out.println("You killed all evil monsters in " + turns
-				+ " turns, yay!");
+	private static void drawVictoryMessage(Graphics g) {
+		drawMessage("You killed all evil monsters in " + turns + " turns, yay!", g);
 	}
 
+	private static void drawMessage(String msg, Graphics g) {
+		showMessage = true;
+		message = msg;
+	}
+	
 	private static void moveEntities() {
 		map.moveEntities();
 	}
@@ -151,6 +160,15 @@ public class Game extends BasicGame {
 			showMiniMap = !showMiniMap;
 			buttonPressed = false;
 		}
+
+		if (container.getInput().isKeyPressed(Input.KEY_Q)) {
+			drawDeathMessage(container.getGraphics());
+			buttonPressed = false;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_W)) {
+			drawVictoryMessage(container.getGraphics());
+			buttonPressed = false;
+		}
 		
 		if (buttonPressed) {
 			buttonPressed = false;
@@ -169,11 +187,11 @@ public class Game extends BasicGame {
 			currentMap = drawWorld(); 
 			
 			if (map.allDead()) {
-				drawVictoryMessage();
+				drawVictoryMessage(container.getGraphics());
 			}
 
 			if (p.isDead()) {
-				drawDeathMessage();
+				drawDeathMessage(container.getGraphics());
 			}		
 		}
 	}
@@ -220,6 +238,15 @@ public class Game extends BasicGame {
 					g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);
 				}				
 			}			
+		}
+		if (showMessage == true) {
+			x = 10;
+			y = WORLD_HEIGHT*16/2;
+			
+			g.setColor(Color.red);
+			g.fillRect(x, y-16, (WORLD_WIDTH*16)-2*x, 64);
+			g.setColor(Color.white);
+			g.drawString(message, x*2, y);
 		}
 	}
 }
