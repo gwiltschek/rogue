@@ -25,10 +25,10 @@ public class Room {
 	
 	private void generateRoom() {
 		Random r = new Random();
-		int min_room_w = 5;
-		int min_room_h = 5;
-		int max_room_w = 7;
-		int max_room_h = 7;
+		int min_room_w = Game.MIN_ROOM_WIDTH;
+		int min_room_h = Game.MIN_ROOM_HEIGHT;
+		int max_room_w = Game.MAX_ROOM_WIDTH;
+		int max_room_h = Game.MAX_ROOM_HEIGHT;
 		
 		// generate room dimensions
 		room_w = min_room_w + r.nextInt(max_room_w);

@@ -27,7 +27,12 @@ public class Game extends BasicGame {
 	public static final String EMPTY_SPACE = " ";
 	public static final int WINDOW_SIZE = 32;
 	public static final int NUM_MONSTERS = 2;
+	public static final int MIN_ROOM_WIDTH = 4;
+	public static final int MIN_ROOM_HEIGHT = 4;
+	public static final int MAX_ROOM_WIDTH = 6;
+	public static final int MAX_ROOM_HEIGHT = 6;
 
+	
 	private static Map map;
 	private static String[][] currentMap;
 	private static Player p;
