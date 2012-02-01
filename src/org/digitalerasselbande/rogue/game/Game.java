@@ -31,6 +31,8 @@ public class Game extends BasicGame {
 	public static final int MIN_ROOM_HEIGHT = 4;
 	public static final int MAX_ROOM_WIDTH = 6;
 	public static final int MAX_ROOM_HEIGHT = 6;
+	public static final int MIN_ROOM_DISTANCE = 2;
+	public static final boolean ALLOW_INTERSECTING_ROOMS = false;
 	private static final int VIEW_RANGE = 3;
 	private static int VIEW_RANGE_CURRENT = VIEW_RANGE;
 	private static Map map;

@@ -39,13 +39,32 @@ public class Map {
 			}			
 		}
 
+		boolean intersects = true;
 		Room a = new Room(this);
+		Room b = null;
+		a.digRoom();
 		rooms.add(a);
 		for (i = 0; i < Game.NUM_ROOMS - 1; i++) {
-			Room b = new Room(this);
+			b = new Room(this);
+			if (!Game.ALLOW_INTERSECTING_ROOMS) {
+				while (intersects) {
+					intersects = false;
+					b = new Room(this);
+
+					for (Room r : rooms) {
+						if (r.intersects(b)) {		
+							System.out.println("INTERSECTS");
+							intersects = true;
+						}
+					}
+					
+				}
+			}
+			b.digRoom();
 			rooms.add(b);
 			connect(a, b);
 			a = b;
+			intersects = true;				
 		}				
 	}
 	

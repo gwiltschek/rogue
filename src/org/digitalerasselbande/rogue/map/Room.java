@@ -40,7 +40,10 @@ public class Room {
 		
 		if (room_x <= 0) room_x = 1;
 		if (room_y <= 0) room_y = 1;
-
+	}
+	
+	public void digRoom() {
+		Random r = new Random();
 		// draw room into map
 		for (int y = room_y; y < room_y + room_h; y++) {
 			for (int x = room_x; x < room_x + room_w; x++) {
@@ -59,9 +62,36 @@ public class Room {
 		}
 	}
 
+	public boolean intersects(Room r) {
+		int offset = 0 - Game.MIN_ROOM_DISTANCE;
+		
+		int x1 = r.getRoom_x();
+		int y1 = r.getRoom_y();
+		
+		int x2 = r.getRoom_x() + r.getRoom_h();
+		int y2 = r.getRoom_y();
+		
+		int x3 = r.getRoom_x();
+		int y3 = r.getRoom_y() + r.getRoom_w();
+
+		int x4 = r.getRoom_x() + r.getRoom_h();
+		int y4 = r.getRoom_y() + r.getRoom_w();
+
+		if (
+				(inRoom(x1, y1, offset)) ||
+				(inRoom(x2, y2, offset)) ||
+				(inRoom(x3, y3, offset)) ||
+				(inRoom(x4, y4, offset))
+			) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	// check if coordinates are inside the room, with offset from wall, if needed 
 	public boolean inRoom(int x, int y, int offset) {
-		if ((x > room_x + offset) &&	(x < room_x + room_w - offset) && (y > room_y + offset) &&	(y < room_y + room_h - offset)) {
+		if ((x > room_x + offset) && (x < room_x + room_h - offset) && (y > room_y + offset) &&	(y < room_y + room_w - offset)) {
 			return true;
 		}
 		return false;
