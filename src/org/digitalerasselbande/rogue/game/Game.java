@@ -38,9 +38,9 @@ public class Game extends BasicGame {
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
-	private boolean showMiniMap = true;
 	
-	private static boolean showMessage = false;
+	private boolean showMiniMap = false;
+    private static boolean showMessage = false;
 	private static String message = "";
 	
 	public String outputMap;
@@ -50,9 +50,7 @@ public class Game extends BasicGame {
 			AppGameContainer app = new AppGameContainer(new Game());
 			app.setDisplayMode(16*WINDOW_SIZE, 16*WINDOW_SIZE, false);
 			app.setShowFPS(false);
-			app.start();
-			//app.setAlwaysRender(true);
-
+			app.start();		
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -60,12 +58,12 @@ public class Game extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		resetWorld();
+     	resetWorld();
 	}
 	
 	private void resetWorld() {
 		int i;
-		showMiniMap = true;
+		showMiniMap = false;
 		showMessage = false;
 		message = "";
 		turns = 0;
@@ -95,6 +93,7 @@ public class Game extends BasicGame {
 			}
 			map.addEntity(m);
 		}
+		
 		currentMap = drawWorld();
 	}
 
@@ -202,7 +201,7 @@ public class Game extends BasicGame {
 			if (p.isDead()) {
 				drawDeathMessage(container.getGraphics());
 			}		
-		}
+		}				
 	}
 
 	@Override
@@ -212,7 +211,7 @@ public class Game extends BasicGame {
 		// minimap
 		if (showMiniMap) {
 			renderMap(container, g, 0, 0, 2, WORLD_HEIGHT);			
-		}
+		}		
 	}
 	
 	public void renderMap(GameContainer container, Graphics g, int x_start, int y_start, int tileSize, int size) {
