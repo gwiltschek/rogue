@@ -17,10 +17,14 @@ public class Map {
 	private LinkedList<Item> items = new LinkedList<Item>();
 	private LinkedList<Room> rooms = new LinkedList<Room>();
 	private Player p;
+	private int killedMonsters = 0;
 	private boolean allDead = true;
 	
-	// the map
+	// the map layout
 	private String[][] map;
+	
+	// the map including all entities, items, etc
+	private String[][] currentMap;
 	
 	// constructor
 	public Map(int w, int h) {
@@ -86,7 +90,7 @@ public class Map {
 		b.addConnectedRoom(a);
 	}
 	
-	public String draw(int x1, int x2, int y1, int y2) {
+	public String[][] draw(int x1, int x2, int y1, int y2) {
 		int x, y;
 		String[][] output = new String[w][h];
 
@@ -109,20 +113,16 @@ public class Map {
 		
 		// add player
 		output[p.getPos_x()][p.getPos_y()] = p.getSymbol();
-				
-		String outputString = "";
 		
-		for (y = y1; y < y2; y++) {
-			for (x = x1; x < x2; x++) {
-				outputString += output[x][y];
-			}			
-			outputString += "\n";
-		}
-		outputString += "HP: " + p.getHealth() + " | XP: " + p.getExp();
-		return outputString;
-
+		// save state
+		currentMap = output;
+		
+		String outputString = "HP: " + p.getHealth() + " | XP: " + p.getExp();
+		System.out.println(outputString);
+		
+		return currentMap;
 	}
-
+	
 	public void addPlayer(Player p) {
 		this.p = p;
 	}
@@ -144,12 +144,15 @@ public class Map {
 				e.setHealth(e.getHealth()-p.getAttack());
 				System.out.println("ATK, ENEMY HP " + e.getHealth());
 				if (e.isDead) {
+					if (e.getClass().getName() == "Monster") {
+						killedMonsters++;
+					}
 					Item drop = e.getDrop();
 					drop.setPos(x, y);
 					addItem(drop);
 					entites.remove(e);
 					p.setExp(p.getExp() + e.getEarnsExp());
-					if (entites.size() == 0) {
+					if (killedMonsters == Game.NUM_MONSTERS) {
 						allDead = true;
 					}
 				}

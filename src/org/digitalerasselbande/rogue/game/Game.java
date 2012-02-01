@@ -1,18 +1,17 @@
 package org.digitalerasselbande.rogue.game;
 
-import java.util.Scanner;
-
 import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.map.Map;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
 public class Game extends BasicGame {
 
@@ -20,18 +19,17 @@ public class Game extends BasicGame {
 		super("rogue");
 	}
 
-	public static final int NUM_ROOMS = 3;
-	public static final int WORLD_WIDTH = 48;
-	public static final int WORLD_HEIGHT = 48;
+	public static final int NUM_ROOMS = 4;
+	public static final int WORLD_WIDTH = 32;
+	public static final int WORLD_HEIGHT = 32;
 	public static final int NUM_SIGNS = 4;
 	public static final String WALL = "I";
 	public static final String EMPTY_SPACE = " ";
+	public static final int WINDOW_SIZE = 32;
+	public static final int NUM_MONSTERS = 2;
 
-	private static final int WINDOW_SIZE = 24;
-	private static final int NUM_MONSTERS = 2;
-
-	private static boolean isRunning = true;
-	private static Map map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
+	private static Map map;
+	private static String[][] currentMap;
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
@@ -41,7 +39,7 @@ public class Game extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Game());
-			app.setDisplayMode(800, 600, false);
+			app.setDisplayMode(16*WORLD_WIDTH, 16*WORLD_HEIGHT, false);
 			app.start();
 			//app.setAlwaysRender(true);
 
@@ -52,8 +50,12 @@ public class Game extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		resetWorld();
+	}
+	
+	private void resetWorld() {
 		int i;
-
+		map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 		p = new Player();
 		pet = new Pet(p, map);
 
@@ -78,22 +80,10 @@ public class Game extends BasicGame {
 			}
 			map.addEntity(m);
 		}
+		currentMap = drawWorld();
 	}
 
-	private static int readInput() {
-		Scanner kb = new Scanner(System.in);
-		String entered = "";
-
-		while (true) {
-			entered = kb.next();
-			if ((entered.equals("w")) || (entered.equals("a"))
-					|| (entered.equals("s")) || (entered.equals("d"))) {
-				return Integer.valueOf(entered.charAt(0));
-			}
-		}
-	}
-
-	private static String drawWorld() {
+	private static String[][] drawWorld() {
 		int x1, x2, y1, y2;
 		int window_size = WINDOW_SIZE;
 		x1 = p.getPos_x() - window_size;
@@ -123,7 +113,7 @@ public class Game extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		boolean buttonPressed = true;
+		boolean buttonPressed = false;
 		int new_x, new_y;
 		new_x = p.getPos_x();
 		new_y = p.getPos_y();
@@ -144,15 +134,16 @@ public class Game extends BasicGame {
 			new_x = (p.getPos_x() + 1);
 			buttonPressed = true;
 		}
+		if (container.getInput().isKeyPressed(Input.KEY_DELETE)) {
+			resetWorld();
+			buttonPressed = false;
+		}
 
 		if (buttonPressed) {
 			buttonPressed = false;
-
 			turns++;
-
+			
 			moveEntities();
-
-			System.out.println(outputMap = drawWorld());
 			
 			if ((new_x >= 0) && (new_x < WORLD_WIDTH) && (new_y >= 0)
 					&& (new_y < WORLD_HEIGHT)) {
@@ -162,22 +153,52 @@ public class Game extends BasicGame {
 				}
 			}
 
+			currentMap = drawWorld(); 
+			
 			if (map.allDead()) {
 				drawVictoryMessage();
 			}
 
 			if (p.isDead()) {
 				drawDeathMessage();
-			}
-			
+			}		
 		}
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
-		if (outputMap != null) {
-			g.drawString(outputMap, 1, 1);
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		int x, y;
+		
+		if (currentMap != null) {
+			for (y = 0; y < Game.WINDOW_SIZE; y++) {
+				for (x = 0; x < Game.WINDOW_SIZE; x++) {
+					if (currentMap[x][y] == Game.EMPTY_SPACE) {
+						g.setColor(Color.white);	
+					}
+					else if (currentMap[x][y] == p.getSymbol()) {
+						g.setColor(Color.green);
+					}
+					else if (currentMap[x][y] == pet.getSymbol()) {
+						g.setColor(Color.pink);
+					}
+					else if (currentMap[x][y] == "!") {
+						g.setColor(Color.red);
+					}
+					else if (currentMap[x][y] == "T") {
+						g.setColor(Color.yellow);
+					}
+					else if (currentMap[x][y] == "d") {
+						g.setColor(Color.orange);
+					}
+					else if (currentMap[x][y] == Game.WALL) {
+						g.setColor(Color.gray);
+					}
+					else {
+						g.setColor(Color.blue);
+					}
+					g.fillRect(x*16, y*16, 16, 16);
+				}				
+			}			
 		}
 	}
 
