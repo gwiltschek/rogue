@@ -68,14 +68,14 @@ public class Room {
 		int x1 = r.getRoom_x();
 		int y1 = r.getRoom_y();
 		
-		int x2 = r.getRoom_x() + r.getRoom_h();
+		int x2 = r.getRoom_x() + r.getRoom_w();
 		int y2 = r.getRoom_y();
 		
 		int x3 = r.getRoom_x();
-		int y3 = r.getRoom_y() + r.getRoom_w();
+		int y3 = r.getRoom_y() + r.getRoom_h();
 
-		int x4 = r.getRoom_x() + r.getRoom_h();
-		int y4 = r.getRoom_y() + r.getRoom_w();
+		int x4 = r.getRoom_x() + r.getRoom_w();
+		int y4 = r.getRoom_y() + r.getRoom_h();
 
 		if (
 				(inRoom(x1, y1, offset)) ||
@@ -91,7 +91,7 @@ public class Room {
 	
 	// check if coordinates are inside the room, with offset from wall, if needed 
 	public boolean inRoom(int x, int y, int offset) {
-		if ((x > room_x + offset) && (x < room_x + room_h - offset) && (y > room_y + offset) &&	(y < room_y + room_w - offset)) {
+		if ((x > room_x + offset) && (x < room_x + room_w - offset) && (y > room_y + offset) &&	(y < room_y + room_h - offset)) {
 			return true;
 		}
 		return false;
