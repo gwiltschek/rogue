@@ -48,6 +48,16 @@ public class Map {
 			a = b;
 		}				
 	}
+	
+	public boolean inSameRoom(Entity a, Entity b) {
+		for (Room r : rooms) {
+			if ((r.inRoom(a.getPos_x(), a.getPos_y(), 0)) && (r.inRoom(b.getPos_x(), b.getPos_y(), 0))) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	public String[][] getMap() {
 		return this.map;

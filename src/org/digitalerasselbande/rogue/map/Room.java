@@ -35,11 +35,11 @@ public class Room {
 		room_h = min_room_h + r.nextInt(max_room_h);
 		
 		// find a place to start
-		room_x = 0 + r.nextInt(Game.WORLD_WIDTH) - room_w;
-		room_y = 0 + r.nextInt(Game.WORLD_WIDTH) - room_h;
+		room_x = r.nextInt(Game.WORLD_WIDTH) - room_w;
+		room_y = r.nextInt(Game.WORLD_WIDTH) - room_h;
 		
-		if (room_x < 0) room_x = 0;
-		if (room_y < 0) room_y = 0;
+		if (room_x <= 0) room_x = 1;
+		if (room_y <= 0) room_y = 1;
 
 		// draw room into map
 		for (int y = room_y; y < room_y + room_h; y++) {
