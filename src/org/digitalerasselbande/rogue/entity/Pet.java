@@ -44,7 +44,7 @@ public class Pet extends Entity {
 			new_pos_y -= dir_y;
 		}
 		
-		if (!map.collides(new_pos_x, new_pos_y)) {
+		if (!map.collidesEntity(new_pos_x, new_pos_y)) {
 			//if (!map.collidesPlayer(new_pos_x, new_pos_y)) {
 				this.setPos(new_pos_x, new_pos_y);
 			//}

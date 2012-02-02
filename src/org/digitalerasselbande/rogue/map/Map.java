@@ -66,14 +66,15 @@ public class Map {
 			intersects = true;				
 		}
 		
-		a = null;
-		for (Room r : rooms) {
-			if (a != null) {
-				connect(r, a);
-				System.out.println("CONNECT");
+		if (Game.CONNECT_ROOMS) {
+			a = null;
+			for (Room r : rooms) {
+				if (a != null) {
+					connect(r, a);
+				}
+					
+				a = r;
 			}
-				
-			a = r;
 		}
 	}
 	
@@ -174,7 +175,7 @@ public class Map {
 	}
 
 	// CLEAN ME TODO
-	public boolean collides(int x, int y) {
+	public boolean collidesEntity(int x, int y) {
 		for (Entity e: entites) {
 			if ((e != (Entity)p) && (e.getPos_x() == x) && (e.getPos_y() == y) && (!e.isPushable())) {
 				p.setHealth(p.getHealth()-e.getAttack());
@@ -241,5 +242,13 @@ public class Map {
 	
 	public boolean allDead() {
 		return allDead;
+	}
+	
+	public void dig(int x, int y) {
+		map[x][y] = Game.EMPTY_SPACE;
+	}
+
+	public void fill(int x, int y) {
+		map[x][y] = Game.WALL;
 	}
 }

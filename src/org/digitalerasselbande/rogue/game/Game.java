@@ -32,6 +32,7 @@ public class Game extends BasicGame {
 	public static final int MAX_ROOM_WIDTH = 6;
 	public static final int MAX_ROOM_HEIGHT = 6;
 	public static final int MIN_ROOM_DISTANCE = 2;
+	public static final boolean CONNECT_ROOMS = false;
 	public static final boolean ALLOW_INTERSECTING_ROOMS = false;
 	private static final int VIEW_RANGE = 3;
 	private static int VIEW_RANGE_CURRENT = VIEW_RANGE;
@@ -153,6 +154,10 @@ public class Game extends BasicGame {
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
 			p.handleInput(Input.KEY_RIGHT);
+			buttonPressed = true;
+		}		
+		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			p.handleInput(Input.KEY_SPACE);
 			buttonPressed = true;
 		}		
 		if (container.getInput().isKeyPressed(Input.KEY_DELETE)) {

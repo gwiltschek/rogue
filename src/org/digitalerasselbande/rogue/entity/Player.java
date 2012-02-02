@@ -1,5 +1,7 @@
 package org.digitalerasselbande.rogue.entity;
 
+import java.util.logging.Logger;
+
 import org.digitalerasselbande.rogue.game.Game;
 import org.digitalerasselbande.rogue.map.Map;
 import org.newdawn.slick.Input;
@@ -7,6 +9,7 @@ import org.newdawn.slick.Input;
 public class Player extends Entity {
 		
 	int next;
+	int last = 0;
 	Map map;
 	
 	public Player(Map map) {
@@ -39,16 +42,43 @@ public class Player extends Entity {
 		else if (next == Input.KEY_RIGHT) {
 			new_x = (this.getPos_x() + 1);
 		}
+		else if (next == Input.KEY_SPACE) {
+			switch (last) {
+				case Input.KEY_UP:
+					new_y -= 1;
+					break;
+				case Input.KEY_DOWN:
+					new_y += 1;
+					break;
+				case Input.KEY_LEFT:
+					new_x -= 1;
+					break;
+				case Input.KEY_RIGHT:
+					new_x += 1;
+					break;					
+			}
+			map.fill(new_x, new_y);
+			last = next;
+			return;
+//			if(!map.collidesEntity(new_x, new_y)) {
+//				map.fill(new_x, new_y);
+//			}
+		}		
 		else {
 			next = 0;
 		}
 		
 		if ((new_x >= 0) && (new_x < Game.WORLD_WIDTH) && (new_y >= 0)
 				&& (new_y < Game.WORLD_HEIGHT)) {
-			if (!map.collides(new_x, new_y)) {
+			if (!map.collidesEntity(new_x, new_y)) {
 				map.collidesItem(new_x, new_y);
 				this.setPos(new_x, new_y);
 			}
+			else if (map.collidesWall(new_x, new_y)) {
+				map.dig(new_x, new_y);
+				this.setPos(new_x, new_y);
+			}
 		}
+		last = next;
 	}
 }
