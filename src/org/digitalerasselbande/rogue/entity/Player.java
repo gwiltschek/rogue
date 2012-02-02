@@ -1,7 +1,5 @@
 package org.digitalerasselbande.rogue.entity;
 
-import java.util.logging.Logger;
-
 import org.digitalerasselbande.rogue.game.Game;
 import org.digitalerasselbande.rogue.map.Map;
 import org.newdawn.slick.Input;
@@ -15,12 +13,14 @@ public class Player extends Entity {
 	public Player(Map map) {
 		setSymbol("@");
 		this.map = map;
+		this.setType("player");
 	}
 	
 	public void handleInput(int key) {
 		next = key;
 	}
 	
+	@SuppressWarnings("unused") // dead code toggled with const
 	public void update() {
 		if (next == 0) {
 			return;
@@ -74,7 +74,7 @@ public class Player extends Entity {
 				map.collidesItem(new_x, new_y);
 				this.setPos(new_x, new_y);
 			}
-			else if (map.collidesWall(new_x, new_y)) {
+			else if (map.collidesWall(new_x, new_y) && Game.PLAYER_CAN_DIG) {
 				map.dig(new_x, new_y);
 				this.setPos(new_x, new_y);
 			}

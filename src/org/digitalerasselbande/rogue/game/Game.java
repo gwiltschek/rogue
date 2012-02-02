@@ -19,20 +19,23 @@ public class Game extends BasicGame {
 		super("rogue");
 	}
 
-	public static final int NUM_ROOMS = 4;
+	public static final int NUM_ROOMS = 5;
 	public static final int WORLD_WIDTH = 32;
 	public static final int WORLD_HEIGHT = 32;
-	public static final int NUM_SIGNS = 4;
+	public static final int NUM_SIGNS = 6;
 	public static final String WALL = "I";
 	public static final String EMPTY_SPACE = " ";
 	public static final int WINDOW_SIZE = 32;
-	public static final int NUM_MONSTERS = 2;
+	public static final int NUM_MONSTERS = 10;
+	public static final int MONSTERS_MIN_HEALTH = 35;
+	public static final int MONSTERS_MAX_HEALTH = 105;
 	public static final int MIN_ROOM_WIDTH = 4;
 	public static final int MIN_ROOM_HEIGHT = 4;
 	public static final int MAX_ROOM_WIDTH = 6;
 	public static final int MAX_ROOM_HEIGHT = 6;
 	public static final int MIN_ROOM_DISTANCE = 2;
-	public static final boolean CONNECT_ROOMS = false;
+	public static final boolean CONNECT_ROOMS = true;
+	public static boolean PLAYER_CAN_DIG = false;
 	public static final boolean ALLOW_INTERSECTING_ROOMS = false;
 	private static final int VIEW_RANGE = 3;
 	private static int VIEW_RANGE_CURRENT = VIEW_RANGE;
@@ -166,6 +169,10 @@ public class Game extends BasicGame {
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_M)) {
 			showMiniMap = !showMiniMap;
+			buttonPressed = false;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_D)) {
+			PLAYER_CAN_DIG = !PLAYER_CAN_DIG;
 			buttonPressed = false;
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_V)) {

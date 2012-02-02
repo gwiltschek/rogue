@@ -17,7 +17,17 @@ public class Entity {
 	private int earnsExp = 5;
 	public boolean isDead = false;
 	private Item drop;
+	private String type = "entity";
 	
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Item getDrop() {
 		return drop;
 	}

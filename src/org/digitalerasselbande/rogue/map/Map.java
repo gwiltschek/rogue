@@ -182,7 +182,7 @@ public class Map {
 				e.setHealth(e.getHealth()-p.getAttack());
 				System.out.println("ATK, ENEMY HP " + e.getHealth());
 				if (e.isDead) {
-					if (e.getClass().getName() == "Monster") {
+					if (e.getType() == "monster") {
 						killedMonsters++;
 					}
 					Item drop = e.getDrop();
