@@ -7,6 +7,8 @@ import org.digitalerasselbande.rogue.game.Game;
 import org.digitalerasselbande.rogue.item.Sign;
 
 public class Room {
+	private int id;
+	private static int roomCounter = 0;
 	private int room_x;
 	private int room_y;
 	private int room_w;
@@ -41,9 +43,13 @@ public class Room {
 		if (room_x <= 0) room_x = 1;
 		if (room_y <= 0) room_y = 1;
 	}
-	
+
+	// keep the generated room and put it on the map
 	public void digRoom() {
 		Random r = new Random();
+		this.id = roomCounter;
+		roomCounter++;
+
 		// draw room into map
 		for (int y = room_y; y < room_y + room_h; y++) {
 			for (int x = room_x; x < room_x + room_w; x++) {

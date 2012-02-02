@@ -62,10 +62,19 @@ public class Map {
 			}
 			b.digRoom();
 			rooms.add(b);
-			connect(a, b);
 			a = b;
 			intersects = true;				
-		}				
+		}
+		
+		a = null;
+		for (Room r : rooms) {
+			if (a != null) {
+				connect(r, a);
+				System.out.println("CONNECT");
+			}
+				
+			a = r;
+		}
 	}
 	
 	public boolean inSameRoom(Entity a, Entity b) {
