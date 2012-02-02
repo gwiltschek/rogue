@@ -36,13 +36,11 @@ public class Game extends BasicGame {
 	public static final boolean ALLOW_INTERSECTING_ROOMS = false;
 	private static final int VIEW_RANGE = 3;
 	private static int VIEW_RANGE_CURRENT = VIEW_RANGE;
-	private static int UPDATE_INTERVAL = 200;
 	private static Map map;
 	private static String[][] currentMap;
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
-	private static int timer;
 	
 	private boolean showMiniMap = false;
     private static boolean showMessage = false;
@@ -72,7 +70,6 @@ public class Game extends BasicGame {
 		showMessage = false;
 		message = "";
 		turns = 0;
-		timer = 0;
 		
 		map = new Map(WORLD_WIDTH, WORLD_HEIGHT);
 		p = new Player(map);
@@ -141,8 +138,28 @@ public class Game extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		boolean buttonPressed = true;
-		timer += delta;
+		boolean buttonPressed = false;
+		
+		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
+			p.handleInput(Input.KEY_UP);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_DOWN)) {
+			p.handleInput(Input.KEY_DOWN);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
+			p.handleInput(Input.KEY_LEFT);
+			buttonPressed = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_RIGHT)) {
+			p.handleInput(Input.KEY_RIGHT);
+			buttonPressed = true;
+		}		
+		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			p.handleInput(Input.KEY_SPACE);
+			buttonPressed = true;
+		}		
 		if (container.getInput().isKeyPressed(Input.KEY_DELETE)) {
 			resetWorld();
 			buttonPressed = false;
@@ -160,39 +177,11 @@ public class Game extends BasicGame {
 			}
 			buttonPressed = false;
 		}
-		if (timer < UPDATE_INTERVAL) {
-			return;
-		}
-		else {
-			timer = 0;
-		}
-		
-		if (container.getInput().isKeyPressed(Input.KEY_UP)) {
-			p.handleInput(Input.KEY_UP);
-			buttonPressed = false;
-		}
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-			p.handleInput(Input.KEY_DOWN);
-			buttonPressed = false;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_LEFT)) {
-			p.handleInput(Input.KEY_LEFT);
-			buttonPressed = true;
-		}
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-			p.handleInput(Input.KEY_RIGHT);
-			buttonPressed = true;
-		}		
-		if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
-			p.handleInput(Input.KEY_SPACE);
-			buttonPressed = false;
-		}		
 		
 		if (buttonPressed) {
 			buttonPressed = false;
-			p.update();
-		}
 			turns++;
+			p.update();
 			moveEntities();
 			currentMap = drawWorld(); 
 			
@@ -203,6 +192,7 @@ public class Game extends BasicGame {
 			if (p.isDead()) {
 				drawDeathMessage(container.getGraphics());
 			}		
+		}				
 	}
 
 	@Override

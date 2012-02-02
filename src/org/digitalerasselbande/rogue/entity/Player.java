@@ -59,7 +59,7 @@ public class Player extends Entity {
 			}
 			map.fill(new_x, new_y);
 			last = next;
-			return;	
+			return;
 //			if(!map.collidesEntity(new_x, new_y)) {
 //				map.fill(new_x, new_y);
 //			}
