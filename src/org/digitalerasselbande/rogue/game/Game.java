@@ -1,14 +1,10 @@
 package org.digitalerasselbande.rogue.game;
 
-import java.util.Random;
-
 import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.map.Map;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -16,9 +12,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.font.effects.Effect;
-
-import com.sun.corba.se.impl.ior.ByteBuffer;
 
 public class Game extends BasicGame {
 
@@ -246,15 +239,6 @@ public class Game extends BasicGame {
 						g.setColor(Color.blue);
 					}
 					g.fillRect((x_start+x)*tileSize, (y_start+y)*tileSize, tileSize, tileSize);
-	GL11.glDrawBuffer(GL11.GL_ACCUM);
-	GL11.glBegin(GL11.GL_DRAW_BUFFER);
-	new org.lwjgl.BufferUtils();
-	byte[] bytes =  new byte[100];
-	 java.nio.ByteBuffer bb = BufferUtils.createByteBuffer(100);
-	 new Random().nextBytes(bytes);
-	 bb.put(bytes);
-	GL11.glDrawPixels(100, 100, 10, 1, bb);
-	GL11.glEnd();
 				}				
 			}
 			int p_x = p.getPos_x();
