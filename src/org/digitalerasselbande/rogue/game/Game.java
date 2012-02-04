@@ -1,10 +1,5 @@
 package org.digitalerasselbande.rogue.game;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.Random;
-
 import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
@@ -17,7 +12,6 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -284,7 +278,11 @@ public class Game extends BasicGame {
 	public void renderMapGL(GameContainer container, Graphics g, int x_start, int y_start, int tileSize, int size) {
 		int x, y;	
 		float fr, fg, fb;
-	
+		
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glLoadIdentity();
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		
 		if (currentMap != null) {
 			for (y = 0; y < size; y++) {
 				for (x = 0; x < size; x++) {
@@ -309,7 +307,7 @@ public class Game extends BasicGame {
 					else {
 						fr = 0.0f; fg = 0.0f; fb = 1.0f;
 					}
-					
+							
 					// create quads for each tile 
 					GL11.glBegin(GL11.GL_QUADS);
 					
