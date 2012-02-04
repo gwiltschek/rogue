@@ -13,7 +13,7 @@ public class Monster extends Entity {
 	public Monster(Map map) {
 		this.setSymbol("!");
 		this.setSymbolString("\033[31m" + this.getSymbol() + "\033[0m");
-		this.setType("monster");
+		this.setType(EntityType.MONSTER);
 		setDrop(new Potion());
 		
 		setHealth(Game.MONSTERS_MIN_HEALTH + new Random().nextInt(Game.MONSTERS_MAX_HEALTH - Game.MONSTERS_MIN_HEALTH));

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import org.digitalerasselbande.rogue.entity.Entity;
+import org.digitalerasselbande.rogue.entity.EntityType;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.game.Game;
 import org.digitalerasselbande.rogue.item.Item;
@@ -182,7 +183,7 @@ public class Map {
 				e.setHealth(e.getHealth()-p.getAttack());
 				System.out.println("ATK, ENEMY HP " + e.getHealth());
 				if (e.isDead) {
-					if (e.getType() == "monster") {
+					if (e.getType() == EntityType.MONSTER) {
 						killedMonsters++;
 					}
 					Item drop = e.getDrop();

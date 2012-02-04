@@ -13,7 +13,7 @@ public class Player extends Entity {
 	public Player(Map map) {
 		setSymbol("@");
 		this.map = map;
-		this.setType("player");
+		this.setType(EntityType.PLAYER);
 	}
 	
 	public void handleInput(int key) {

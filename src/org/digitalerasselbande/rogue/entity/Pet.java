@@ -16,7 +16,7 @@ public class Pet extends Entity {
 		this.setSymbol("*");
 		this.setSymbolString("\033[34m" + this.getSymbol() + "\033[0m");
 		this.setIsPushable(true);
-		this.setType("pet");
+		this.setType(EntityType.PET);
 		this.owner = owner;
 		this.map = map;
 	}
