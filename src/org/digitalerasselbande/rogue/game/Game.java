@@ -283,9 +283,8 @@ public class Game extends BasicGame {
 
 	public void renderMapGL(GameContainer container, Graphics g, int x_start, int y_start, int tileSize, int size) {
 		int x, y;	
-		float fr, fg, fb, fa;
-		fr = fg = fb = fa = 0.0f;
-
+		float fr, fg, fb;
+	
 		if (currentMap != null) {
 			for (y = 0; y < size; y++) {
 				for (x = 0; x < size; x++) {
@@ -325,7 +324,5 @@ public class Game extends BasicGame {
 			}
 		}	
 		Display.update();
-
 	}
-
 }
