@@ -1,15 +1,23 @@
 package org.digitalerasselbande.rogue.game;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.Random;
+
 import org.digitalerasselbande.rogue.entity.Monster;
 import org.digitalerasselbande.rogue.entity.Pet;
 import org.digitalerasselbande.rogue.entity.Player;
 import org.digitalerasselbande.rogue.map.Map;
 
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -44,6 +52,7 @@ public class Game extends BasicGame {
 	private static Player p;
 	private static Pet pet;
 	private static int turns = 0;
+	private static AppGameContainer app;
 	
 	private boolean showMiniMap = false;
     private static boolean showMessage = false;
@@ -53,7 +62,7 @@ public class Game extends BasicGame {
 
 	public static void main(String[] args) {
 		try {
-			AppGameContainer app = new AppGameContainer(new Game());
+			app = new AppGameContainer(new Game());
 			app.setDisplayMode(16*WINDOW_SIZE, 16*WINDOW_SIZE, false);
 			app.setShowFPS(false);
 			app.start();		
@@ -65,6 +74,13 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
      	resetWorld();
+     	
+     	// init OpenGL
+//    	GL11.glMatrixMode(GL11.GL_PROJECTION);
+//    	GL11.glLoadIdentity();
+//    	GL11.glOrtho(0, WINDOW_SIZE * 16, 0, WINDOW_SIZE * 16, 1, -1);
+//    	GL11.glMatrixMode(GL11.GL_MODELVIEW);
+//     
 	}
 	
 	private void resetWorld() {
@@ -204,11 +220,10 @@ public class Game extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		renderMap(container, g, 0, 0, 16, WINDOW_SIZE);
-		
+		renderMapGL(container, g, 0, 0, 16, WINDOW_SIZE);
 		// minimap
 		if (showMiniMap) {
-			renderMap(container, g, 0, 0, 2, WORLD_HEIGHT);			
+			renderMapGL(container, g, 0, 0, 2, WORLD_HEIGHT);			
 		}		
 	}
 	
@@ -264,4 +279,51 @@ public class Game extends BasicGame {
 			g.drawString(message, x*2, y);
 		}
 	}
+
+	public void renderMapGL(GameContainer container, Graphics g, int x_start, int y_start, int tileSize, int size) {
+		int x, y;	
+		float fr, fg, fb, fa;
+		fr = fg = fb = fa = 0.0f;
+
+		if (currentMap != null) {
+			for (y = 0; y < size; y++) {
+				for (x = 0; x < size; x++) {
+					if (currentMap[x][y] == Game.EMPTY_SPACE) {
+						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MIN_VALUE;
+					}
+					else if (currentMap[x][y] == p.getSymbol()) {
+						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
+					}
+					else if (currentMap[x][y] == pet.getSymbol()) {
+						fr = Float.MAX_VALUE; fg = Float.MIN_VALUE; fb = Float.MIN_VALUE; fa = Float.MIN_VALUE;
+					}
+					else if (currentMap[x][y] == "!") {
+						fr = 255; fg = 0; fb = 255; fa = 255;
+					}
+					else if (currentMap[x][y] == "T") {
+						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MIN_VALUE; fa = Float.MIN_VALUE;
+					}
+					else if (currentMap[x][y] == Game.WALL) {
+						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
+					}
+					else {
+						fr = Float.MAX_VALUE; fg = Float.MIN_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
+					}
+										
+					GL11.glBegin(GL11.GL_QUADS);
+					
+						GL11.glColor3f(fr, fg, fb);
+						GL11.glVertex2i((x_start+x)*tileSize, (y_start+y)*tileSize);
+						GL11.glVertex2i((x_start+x)*tileSize, tileSize + (y_start+y)*tileSize);
+						GL11.glVertex2i(tileSize +  (x_start+x)*tileSize, tileSize + (y_start+y)*tileSize);
+						GL11.glVertex2i(tileSize + (x_start+x)*tileSize, (y_start+y)*tileSize);						
+
+					GL11.glEnd();
+				}				
+			}
+		}	
+		Display.update();
+
+	}
+
 }

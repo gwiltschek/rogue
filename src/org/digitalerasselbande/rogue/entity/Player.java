@@ -20,7 +20,6 @@ public class Player extends Entity {
 		next = key;
 	}
 	
-	@SuppressWarnings("unused") // dead code toggled with const
 	public void update() {
 		if (next == 0) {
 			return;
