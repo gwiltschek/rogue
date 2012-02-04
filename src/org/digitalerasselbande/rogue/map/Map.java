@@ -114,8 +114,6 @@ public class Map {
 			y_dir = 1;
 		}
 		
-		System.out.println(x_dir);
-		
 		for (x = x_a; x != x_b; x+=x_dir) {
 			map[x][y_a] = Game.EMPTY_SPACE;
 		}
