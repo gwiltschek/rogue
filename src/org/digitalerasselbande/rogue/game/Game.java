@@ -299,20 +299,19 @@ public class Game extends BasicGame {
 						fr = 0.0f; fg = 1.0f; fb = 0.0f;
 					}
 					else if (currentMap[x][y] == pet.getSymbol()) {
-						fr = 0.2f; fg = 0.5f; fb = 0.5f;
+						fr = 1.0f; fg = 0.75f; fb = 0.6f;
 					}
 					else if (currentMap[x][y] == "!") {
 						fr = 1.0f; fg = 0.0f; fb = 0.0f;
 					}
 					else if (currentMap[x][y] == "T") {
-						fr = 1.0f; fg = 0.0f; fb = 1.0f;
+						fr = 1.0f; fg = 1.0f; fb = 0.0f;
 					}
 					else {
 						fr = 0.0f; fg = 0.0f; fb = 1.0f;
 					}
 					
-										
-					
+					// create quads for each tile 
 					GL11.glBegin(GL11.GL_QUADS);
 					
 						GL11.glColor3f(fr, fg, fb);
