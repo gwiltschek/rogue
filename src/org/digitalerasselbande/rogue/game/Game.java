@@ -74,8 +74,9 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
      	resetWorld();
-     	
-     	// init OpenGL
+
+     	// init OpenGL     	
+     	GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
 //    	GL11.glMatrixMode(GL11.GL_PROJECTION);
 //    	GL11.glLoadIdentity();
 //    	GL11.glOrtho(0, WINDOW_SIZE * 16, 0, WINDOW_SIZE * 16, 1, -1);
@@ -289,27 +290,29 @@ public class Game extends BasicGame {
 			for (y = 0; y < size; y++) {
 				for (x = 0; x < size; x++) {
 					if (currentMap[x][y] == Game.EMPTY_SPACE) {
-						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MIN_VALUE;
-					}
-					else if (currentMap[x][y] == p.getSymbol()) {
-						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
-					}
-					else if (currentMap[x][y] == pet.getSymbol()) {
-						fr = Float.MAX_VALUE; fg = Float.MIN_VALUE; fb = Float.MIN_VALUE; fa = Float.MIN_VALUE;
-					}
-					else if (currentMap[x][y] == "!") {
-						fr = 255; fg = 0; fb = 255; fa = 255;
-					}
-					else if (currentMap[x][y] == "T") {
-						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MIN_VALUE; fa = Float.MIN_VALUE;
+						fr = 1.0f; fg = 1.0f; fb = 1.0f;
 					}
 					else if (currentMap[x][y] == Game.WALL) {
-						fr = Float.MAX_VALUE; fg = Float.MAX_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
+						fr = 0.5f; fg = 0.5f; fb = 0.5f;
+					}
+					else if (currentMap[x][y] == p.getSymbol()) {
+						fr = 0.0f; fg = 1.0f; fb = 0.0f;
+					}
+					else if (currentMap[x][y] == pet.getSymbol()) {
+						fr = 0.2f; fg = 0.5f; fb = 0.5f;
+					}
+					else if (currentMap[x][y] == "!") {
+						fr = 1.0f; fg = 0.0f; fb = 0.0f;
+					}
+					else if (currentMap[x][y] == "T") {
+						fr = 1.0f; fg = 0.0f; fb = 1.0f;
 					}
 					else {
-						fr = Float.MAX_VALUE; fg = Float.MIN_VALUE; fb = Float.MAX_VALUE; fa = Float.MAX_VALUE;
+						fr = 0.0f; fg = 0.0f; fb = 1.0f;
 					}
+					
 										
+					
 					GL11.glBegin(GL11.GL_QUADS);
 					
 						GL11.glColor3f(fr, fg, fb);
