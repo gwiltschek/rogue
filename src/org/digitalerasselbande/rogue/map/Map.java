@@ -14,6 +14,7 @@ public class Map {
 	// dimensions
 	private int w;
 	private int h;
+	
 	private LinkedList<Entity> entites = new LinkedList<Entity>();
 	private LinkedList<Item> items = new LinkedList<Item>();
 	private LinkedList<Room> rooms = new LinkedList<Room>();
